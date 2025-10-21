@@ -1,157 +1,105 @@
 `timescale 1ns/1ps
 
-module tb_matrix_multiplier;
+module matrix_multiplier #(
+    parameter M1 = 3,
+    parameter N1 = 3,
+    parameter N2 = 3,
+    parameter DATA_WIDTH = 16
+)(
+    input wire clk,
+    input wire rst,
+    input wire start,
 
-    parameter M1 = 3;
-    parameter N1 = 3;
-    parameter N2 = 3;
-    parameter DATA_WIDTH = 16;
-    parameter CLK_PERIOD = 10;
-    
-    reg clk, rst, start;
-    reg [DATA_WIDTH-1:0] mat_a_data, mat_b_data;
-    reg [$clog2(M1*N1)-1:0] mat_a_addr;
-    reg [$clog2(N1*N2)-1:0] mat_b_addr;
-    reg mat_a_wen, mat_b_wen;
-    
-    wire [DATA_WIDTH-1:0] mat_c_data;
-    wire mat_c_valid;
-    wire done;
-    
-    // Instantiate matrix multiplier
-    matrix_multiplier #(
-        .M1(M1),
-        .N1(N1),
-        .N2(N2),
-        .DATA_WIDTH(DATA_WIDTH)
-    ) dut (
-        .clk(clk),
-        .rst(rst),
-        .start(start),
-        .mat_a_data(mat_a_data),
-        .mat_a_addr(mat_a_addr),
-        .mat_a_wen(mat_a_wen),
-        .mat_b_data(mat_b_data),
-        .mat_b_addr(mat_b_addr),
-        .mat_b_wen(mat_b_wen),
-        .mat_c_data(mat_c_data),
-        .mat_c_valid(mat_c_valid),
-        .done(done)
-    );
-    
-    // Clock generation
-    initial clk = 0;
-    always #(CLK_PERIOD/2) clk = ~clk;
-    
-    // Expected and result matrices
-    reg [DATA_WIDTH-1:0] expected_matrix [0:M1*N2-1];
-    reg [DATA_WIDTH-1:0] result_matrix [0:M1*N2-1];
-    integer result_count;
-    integer error_count;
-    
-    // Declare all integers at module level for ModelSim 2020.1 compliance
-    integer i;
-    integer int_part, frac_part, e_int_part, e_frac_part;
-    integer diff;
-    
-    // Store results
+    input wire [DATA_WIDTH-1:0] mat_a_data,
+    input wire [$clog2(M1*N1)-1:0] mat_a_addr,
+    input wire mat_a_wen,
+
+    input wire [DATA_WIDTH-1:0] mat_b_data,
+    input wire [$clog2(N1*N2)-1:0] mat_b_addr,
+    input wire mat_b_wen,
+
+    output reg [DATA_WIDTH-1:0] mat_c_data,
+    output reg mat_c_valid,
+    output reg done
+);
+
+    reg [DATA_WIDTH-1:0] matrix_a [0:M1*N1-1];
+    reg [DATA_WIDTH-1:0] matrix_b [0:N1*N2-1];
+
+    reg [$clog2(M1)-1:0] i;
+    reg [$clog2(N2)-1:0] j;
+    reg [$clog2(N1)-1:0] k;
+
+    reg [2*DATA_WIDTH-1:0] accumulator;
+
+    localparam S_IDLE = 0, S_CALC = 1, S_OUTPUT = 2, S_NEXT = 3, S_DONE = 4;
+    reg [2:0] state;
+
     always @(posedge clk) begin
-        if (mat_c_valid) begin
-            result_matrix[result_count] <= mat_c_data;
-            result_count <= result_count + 1;
-        end
+        if (mat_a_wen)
+            matrix_a[mat_a_addr] <= mat_a_data;
+        if (mat_b_wen)
+            matrix_b[mat_b_addr] <= mat_b_data;
     end
-    
-    initial begin
-        $dumpfile("matrix_mult.vcd");
-        $dumpvars(0, tb_matrix_multiplier);
-        
-        // Initialize
-        rst = 1;
-        start = 0;
-        mat_a_wen = 0;
-        mat_b_wen = 0;
-        result_count = 0;
-        error_count = 0;
-        
-        #(CLK_PERIOD*2);
-        rst = 0;
-        
-        // Load Matrix A (3x3)
-        // [[1.0, 2.0, 3.0],
-        //  [4.0, 5.0, 6.0],
-        //  [7.0, 8.0, 9.0]]
-        mat_a_wen = 1;
-        for (i = 0; i < 9; i = i + 1) begin
-            mat_a_addr = i;
-            mat_a_data = (i+1) << 8; // Q8.8 fixed-point
-            #CLK_PERIOD;
-        end
-        mat_a_wen = 0;
-        
-        // Load Matrix B (3x3) - Identity matrix
-        mat_b_wen = 1;
-        for (i = 0; i < 9; i = i + 1) begin
-            mat_b_addr = i;
-            if (i % 4 == 0)
-                mat_b_data = 16'h0100; // 1.0 Q8.8
-            else
-                mat_b_data = 16'h0000; // 0.0
-            #CLK_PERIOD;
-        end
-        mat_b_wen = 0;
-        
-        // Define Expected Matrix C (same as Matrix A for identity)
-        expected_matrix[0] = 16'h0100; // 1.0
-        expected_matrix[1] = 16'h0200; // 2.0
-        expected_matrix[2] = 16'h0300; // 3.0
-        expected_matrix[3] = 16'h0400; // 4.0
-        expected_matrix[4] = 16'h0500; // 5.0
-        expected_matrix[5] = 16'h0600; // 6.0
-        expected_matrix[6] = 16'h0700; // 7.0
-        expected_matrix[7] = 16'h0800; // 8.0
-        expected_matrix[8] = 16'h0900; // 9.0
-        
-        // Start multiplication
-        #(CLK_PERIOD*2);
-        start = 1;
-        #CLK_PERIOD;
-        start = 0;
-        
-        // Wait for done
-        wait(done);
-        #(CLK_PERIOD*10);
-        
-        // Compare results and calculate error
-        $display("\n=== Matrix Multiplication Results ===");
-        for (i = 0; i < M1*N2; i = i + 1) begin
-            int_part = $signed(result_matrix[i]) >>> 8;
-            frac_part = ((result_matrix[i] & 16'h00FF) * 100) >> 8;
-            e_int_part = $signed(expected_matrix[i]) >>> 8;
-            e_frac_part = ((expected_matrix[i] & 16'h00FF) * 100) >> 8;
-            diff = (int_part - e_int_part)*100 + (frac_part - e_frac_part);
-            if (diff < 0) diff = -diff;
-            if (diff > 2) error_count = error_count + 1; // threshold
-            
-            if (i % N2 == 0) $display("");
-            $display("C[%0d] = %d.%02d (Expected %d.%02d) - Error: %d", i, int_part, frac_part, e_int_part, e_frac_part, diff);
-        end
-        
-        if (error_count == 0) begin
-            $display("\nAll values matched expected results within error threshold.");
+
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            state <= S_IDLE;
+            mat_c_data <= 0;
+            mat_c_valid <= 0;
+            done <= 0;
+            i <= 0; j <= 0; k <= 0;
+            accumulator <= 0;
         end else begin
-            $display("\nSimulation failed with %0d errors.", error_count);
+            case (state)
+                S_IDLE: begin
+                    mat_c_valid <= 0;
+                    done <= 0;
+                    if (start) begin
+                        i <= 0; j <= 0; k <= 0;
+                        accumulator <= 0;
+                        state <= S_CALC;
+                    end
+                end
+                S_CALC: begin
+                    // Accumulate: acc += A[i*N1+k] * B[k*N2+j] in Q8.8
+                    accumulator <= accumulator + $signed(matrix_a[i*N1 + k]) * $signed(matrix_b[k*N2 + j]);
+                    if (k == N1-1) begin
+                        state <= S_OUTPUT;
+                    end else begin
+                        k <= k + 1;
+                    end
+                end
+                S_OUTPUT: begin
+                    mat_c_data <= accumulator >>> 8;
+                    mat_c_valid <= 1;
+                    accumulator <= 0;
+                    k <= 0;
+                    state <= S_NEXT;
+                end
+                S_NEXT: begin
+                    mat_c_valid <= 0;
+                    if (j < N2-1) begin
+                        j <= j + 1;
+                        state <= S_CALC;
+                    end else begin
+                        j <= 0;
+                        if (i < M1-1) begin
+                            i <= i + 1;
+                            state <= S_CALC;
+                        end else begin
+                            state <= S_DONE;
+                        end
+                    end
+                end
+                S_DONE: begin
+                    done <= 1;
+                    mat_c_valid <= 0;
+                    if (!start)
+                        state <= S_IDLE;
+                end
+            endcase
         end
-        
-        $display("\n=== Simulation Complete ===");
-        $finish;
-    end
-    
-    // Timeout
-    initial begin
-        #10000;
-        $display("ERROR: Simulation timeout!");
-        $finish;
     end
 
 endmodule

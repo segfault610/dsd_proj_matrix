@@ -58,6 +58,10 @@ module tb_matrix_multiplier;
     end
     
     integer i;
+    // --- FIX: Declarations moved from the for-loop to the top of the initial block ---
+    integer int_part, frac_part, e_int_part, e_frac_part;
+    integer diff;
+
     initial begin
         $dumpfile("matrix_mult.vcd");
         $dumpvars(0, tb_matrix_multiplier);
@@ -121,8 +125,7 @@ module tb_matrix_multiplier;
         // Compare results and calculate error
         $display("\n=== Matrix Multiplication Results ===");
         for (i = 0; i < M1*N2; i = i + 1) begin
-            integer int_part, frac_part, e_int_part, e_frac_part;
-            integer diff;
+            
             int_part = $signed(result_matrix[i]) >>> 8;
             frac_part = ((result_matrix[i] & 16'h00FF) * 100) >> 8;
             e_int_part = $signed(expected_matrix[i]) >>> 8;

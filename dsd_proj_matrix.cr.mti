@@ -1,9 +1,9 @@
-C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v {1 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v
+C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v {1 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module tb_matrix_multiplier
+-- Compiling module tb_linear_equation_solver
 
 Top level modules:
-	tb_matrix_multiplier
+	tb_linear_equation_solver
 
 } {} {}} C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_matrix_multiplier.v {1 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_matrix_multiplier.v
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
