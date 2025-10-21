@@ -9,49 +9,118 @@ z2
 !i10f 100
 cModel Technology
 dC:/intelFPGA/20.1
+vlinear_equation_solver_3x3
+Z0 !s110 1761035871
+!i10b 1
+!s100 OLVziej>Z;UOO?:l`HaYa1
+Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IoO7[]5:7i7Q2U_YE1HfT73
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 dC:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix
+w1761035481
+8C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v
+FC:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v
+!i122 63
+L0 3 120
+Z4 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z5 !s108 1761035871.000000
+!s107 C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v|
+!i113 1
+Z6 o-work work
+Z7 tCvgOpt 0
+vlinear_solver_tb
+!s110 1761034668
+!i10b 1
+!s100 alKO^]VmMIgS1DninFSP]0
+R1
+IVcRAC6OCjTZoZdBie9K5L2
+R2
+R3
+w1761034661
+Z8 8C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v
+Z9 FC:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v
+!i122 33
+Z10 L0 3 144
+R4
+r1
+!s85 0
+31
+!s108 1761034668.000000
+!s107 C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v|
+Z11 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v|
+!i113 1
+R6
+R7
 vmatrix_multiplier
 !s110 1761028971
 !i10b 1
 !s100 Fh7=zdzJeTh?hLaa?B:o00
-Z0 !s11b Dg1SIo80bB@j0V0VzS_@n1
+R1
 IU4]Q<Mc^W@G;?D[<flINK1
-Z1 VDg1SIo80bB@j0V0VzS_@n1
-Z2 dC:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix
+R2
+R3
 w1761028303
-Z3 8C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v
-Z4 FC:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v
+Z12 8C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v
+Z13 FC:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v
 !i122 2
 L0 6 114
-Z5 OV;L;2020.1;71
+R4
 r1
 !s85 0
 31
 !s108 1761028970.000000
-!s107 C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v|
-Z6 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v|
+Z14 !s107 C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v|
+Z15 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v|
 !i113 1
-Z7 o-work work
-Z8 tCvgOpt 0
-vtb_matrix_multiplier
-!s110 1761030230
+R6
+R7
+vtb_linear_equation_solver
+!s110 1761035872
 !i10b 1
-!s100 dQODF45CCGjLg40oM<_;?1
-R0
-IMW?Q]NT[ZjMaVHcTkA_bm3
+!s100 ?2e2=]fQl4l=o^TbOJ?dX1
 R1
+IfheLX]EPz2n=^=W^<G1Y71
 R2
-w1761030126
 R3
+w1761035866
+R8
+R9
+!i122 64
+R10
 R4
-!i122 8
-L0 3 155
-R5
 r1
 !s85 0
 31
-!s108 1761030230.000000
-Z9 !s107 C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v|
-R6
+!s108 1761035872.000000
+Z16 !s107 C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v|
+R11
 !i113 1
+R6
 R7
-R8
+vtb_matrix_multiplier
+R0
+!i10b 1
+!s100 dQODF45CCGjLg40oM<_;?1
+R1
+IMW?Q]NT[ZjMaVHcTkA_bm3
+R2
+R3
+w1761030126
+R12
+R13
+!i122 62
+L0 3 155
+R4
+r1
+!s85 0
+31
+R5
+R14
+R15
+!i113 1
+R6
+R7
