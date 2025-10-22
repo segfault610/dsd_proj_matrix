@@ -2,36 +2,176 @@
 
 module linear_equation_solver_3x3 #(
     parameter DATA_WIDTH = 16,
-    parameter MAX_ITER = 40         // Increased iterations for better accuracy
+    parameter MAX_ITER = 40,
+    parameter FRAC_BITS = 8            // Q8.8 fixed-point
 )(
     input wire clk,
     input wire rst,
     input wire start,
-    // Matrix A and vector b inputs
+
+    // Matrix A and input vector b load interface
     input wire [DATA_WIDTH-1:0] a_data,
     input wire [3:0] a_addr,
     input wire a_wen,
     input wire [DATA_WIDTH-1:0] b_data,
     input wire [1:0] b_addr,
     input wire b_wen,
-    // Outputs
+
+    // Solution output
     output reg [DATA_WIDTH-1:0] x0, x1, x2,
     output reg done
 );
 
-    // Internal storage
+    // Internal registers and storage
     reg [DATA_WIDTH-1:0] A [0:8];
     reg [DATA_WIDTH-1:0] b [0:2];
     reg [DATA_WIDTH-1:0] x [0:2];
     reg [DATA_WIDTH-1:0] x_new [0:2];
 
-    // FSM states
-    localparam IDLE = 0, LOAD = 1, ITER = 2, OUTPUT = 3, DONE = 4;
+    integer iter; // iteration counter
     reg [2:0] state;
+    localparam S_IDLE=0, S_LOAD=1, S_MVMUL=2, S_UPDATE=3, S_OUTPUT=4, S_DONE=5;
 
-    integer iter;
+    // matrix-mult control (kept for compatibility, not used in update math)
+    reg matmul_start;
+    reg [DATA_WIDTH-1:0] mat_a_data, mat_b_data;
+    reg [3:0] mat_a_addr, mat_b_addr;
+    reg mat_a_wen, mat_b_wen;
 
-    // Memory write for A and b
+    wire [DATA_WIDTH-1:0] mat_c_data;
+    wire mat_c_valid;
+    wire matmul_done;
+
+    // load counter
+    reg [3:0] load_cnt;
+
+    // Jacobi calculation variables
+    integer i, j;
+    // product A*x can be up to 32 bits for DATA_WIDTH=16 => keep double width
+    reg signed [2*DATA_WIDTH-1:0] prod;
+    reg signed [2*DATA_WIDTH-1:0] sum;   // will hold sum in Q8.8 after shifting
+    reg signed [2*DATA_WIDTH-1:0] num;   // numerator in Q8.8
+    reg signed [DATA_WIDTH-1:0] denom;   // denominator A[i,i] in Q8.8
+
+    // Instance: 3x3 * 3x1 matrix-vector multiplication (kept for symmetry)
+    matrix_multiplier #(
+        .M1(3), .N1(3), .N2(1), .DATA_WIDTH(DATA_WIDTH)
+    ) matmul (
+        .clk(clk), .rst(rst), .start(matmul_start),
+        .mat_a_data(mat_a_data), .mat_a_addr(mat_a_addr), .mat_a_wen(mat_a_wen),
+        .mat_b_data(mat_b_data), .mat_b_addr(mat_b_addr), .mat_b_wen(mat_b_wen),
+        .mat_c_data(mat_c_data), .mat_c_valid(mat_c_valid), .done(matmul_done)
+    );
+
+    // Main FSM
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            state <= S_IDLE;
+            load_cnt <= 0;
+            matmul_start <= 0; mat_a_wen <= 0; mat_b_wen <= 0;
+            iter <= 0; done <= 0;
+            x0 <= 0; x1 <= 0; x2 <= 0;
+            x[0] <= 0; x[1] <= 0; x[2] <= 0;
+            x_new[0] <= 0; x_new[1] <= 0; x_new[2] <= 0;
+        end else begin
+            case (state)
+                S_IDLE: begin
+                    done <= 0;
+                    if (start) begin
+                        x[0] <= 0; x[1] <= 0; x[2] <= 0;
+                        iter <= 0;
+                        state <= S_LOAD;
+                    end
+                end
+
+                // load A and current x into multiplier (kept from original design)
+                S_LOAD: begin
+                    if (~a_wen && ~b_wen) begin
+                        mat_a_wen <= 1; mat_b_wen <= 1;
+                        if (load_cnt < 9) begin
+                            mat_a_addr <= load_cnt;
+                            mat_a_data <= A[load_cnt];
+                        end else mat_a_wen <= 0;
+                        if (load_cnt < 3) begin
+                            mat_b_addr <= load_cnt;
+                            mat_b_data <= x[load_cnt];
+                        end else mat_b_wen <= 0;
+                        load_cnt <= load_cnt + 1;
+                        if (load_cnt == 9) begin
+                            mat_a_wen <= 0;
+                            mat_b_wen <= 0;
+                            load_cnt <= 0;
+                            state <= S_MVMUL;
+                            matmul_start <= 1;
+                        end
+                    end
+                end
+
+                S_MVMUL: begin
+                    matmul_start <= 0;
+                    if (matmul_done) begin
+                        state <= S_UPDATE;
+                    end
+                end
+
+                S_UPDATE: begin
+                    // Jacobi in Q8.8 arithmetic:
+                    // For each i:
+                    // sum = Sum_{j != i} (A[i,j] * x[j]) >>> FRAC_BITS   // convert Q16.16 -> Q8.8
+                    // num = b[i] - sum                                      // Q8.8
+                    // x_new[i] = (num << FRAC_BITS) / A[i,i]               // result Q8.8
+
+                    for (i = 0; i < 3; i = i + 1) begin
+                        sum = 0;
+                        for (j = 0; j < 3; j = j + 1) begin
+                            if (j != i) begin
+                                // multiply signed Q8.8 * Q8.8 -> Q16.16 (prod)
+                                prod = $signed(A[i*3 + j]) * $signed(x[j]);
+                                // convert Q16.16 -> Q8.8 by >> FRAC_BITS (arithmetic)
+                                sum = sum + (prod >>> FRAC_BITS);
+                            end
+                        end
+
+                        // b is Q8.8, sum is Q8.8
+                        num = $signed(b[i]) - sum;      // Q8.8
+                        denom = $signed(A[i*3 + i]);    // Q8.8
+
+                        // to keep result in Q8.8: multiply numerator by 2^FRAC_BITS then divide
+                        if (denom != 0)
+                            x_new[i] <= ($signed(num) * (1 << FRAC_BITS)) / $signed(denom);
+                        else
+                            x_new[i] <= 0;
+                    end
+
+                    // update x, iterate
+                    x[0] <= x_new[0];
+                    x[1] <= x_new[1];
+                    x[2] <= x_new[2];
+
+                    iter <= iter + 1;
+                    if (iter >= MAX_ITER)
+                        state <= S_OUTPUT;
+                    else
+                        state <= S_LOAD;
+                end
+
+                S_OUTPUT: begin
+                    x0 <= x[0];
+                    x1 <= x[1];
+                    x2 <= x[2];
+                    done <= 1;
+                    state <= S_DONE;
+                end
+
+                S_DONE: begin
+                    done <= 1;
+                end
+
+            endcase
+        end
+    end
+
+    // Allow memory writes from testbench
     always @(posedge clk) begin
         if (a_wen)
             A[a_addr] <= a_data;
@@ -39,86 +179,4 @@ module linear_equation_solver_3x3 #(
             b[b_addr] <= b_data;
     end
 
-    // Jacobi computation variables
-    integer i, j;
-    reg signed [2*DATA_WIDTH-1:0] sum [0:2]; // separate sums for each variable
-    reg signed [2*DATA_WIDTH-1:0] num;       // Temporary variable for numerator
-    reg signed [DATA_WIDTH-1:0] denom;     // Temporary variable for denominator
-
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
-            state <= IDLE;
-            done  <= 1'b0;
-            x0 <= 0; x1 <= 0; x2 <= 0;
-            x[0] <= 0; x[1] <= 0; x[2] <= 0;
-            x_new[0] <= 0; x_new[1] <= 0; x_new[2] <= 0;
-            iter <= 0;
-        end else begin
-            case (state)
-                // Wait for start pulse
-                IDLE: begin
-                    done <= 1'b0;
-                    if (start) begin
-                        x[0] <= 0; x[1] <= 0; x[2] <= 0;
-                        iter <= 0;
-                        state <= LOAD;
-                    end
-                end
-                // Just transition: matrices are already loaded
-                LOAD: begin
-                    state <= ITER;
-                end
-                // Jacobi iteration: one update per clock cycle
-                ITER: begin
-                    // Compute sums for each variable. Multiplying two Q8.8 numbers (A*x) results in a Q16.16 number.
-                    for (i = 0; i < 3; i = i + 1) begin
-                        sum[i] = 0;
-                        for (j = 0; j < 3; j = j + 1) begin
-                            if (j != i)
-                                sum[i] = sum[i] + $signed(A[i*3 + j]) * $signed(x[j]);
-                        end
-                    end
-                    // Jacobi updates: (b[i] - sum) / A[i][i]
-                    for (i = 0; i < 3; i = i + 1) begin
-                        // To subtract, we must align the fixed points.
-                        // Convert b[i] from Q8.8 to Q16.16 by shifting left 8 bits.
-                        // sum[i] is already Q16.16. The result (num) is Q16.16.
-                        num = ($signed(b[i]) << 8) - sum[i];
-                        
-                        // The denominator is the Q8.8 value of A[i][i].
-                        denom = $signed(A[i*3 + i]);
-                        
-                        // Avoid division by zero.
-                        // The division of a Q16.16 number by a Q8.8 number results in a Q8.8 number,
-                        // which is the correct format for x_new.
-                        if (denom != 0)
-                            x_new[i] <= num / denom;
-                        else
-                            x_new[i] <= 0;
-                    end
-                    // Update for next iteration
-                    x[0] <= x_new[0];
-                    x[1] <= x_new[1];
-                    x[2] <= x_new[2];
-                    iter <= iter + 1;
-                    if (iter >= MAX_ITER)
-                        state <= OUTPUT;
-                end
-                // Output the result
-                OUTPUT: begin
-                    x0 <= x[0];
-                    x1 <= x[1];
-                    x2 <= x[2];
-                    done <= 1'b1;
-                    state <= DONE;
-                end
-                DONE: begin
-                    done <= 1'b1;
-                end
-            endcase
-        end
-    end
-
 endmodule
-
-
