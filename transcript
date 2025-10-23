@@ -4,32 +4,83 @@
 # Compile of linear_equation_solver.v was successful.
 # Compile of hill_cipher_crypto.v was successful.
 # Compile of tb_hill_cipher.v was successful.
-# 6 compiles, 0 failed with no errors.
-vsim -gui work.tb_hill_cipher
-# vsim -gui work.tb_hill_cipher 
-# Start time: 08:28:30 on Oct 23,2025
-# Loading work.tb_hill_cipher
-# Loading work.hill_cipher_crypto
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v was successful.
+# 8 compiles, 0 failed with no errors.
+vsim -gui work.tb_simple_generic_matrix_mult
+# vsim -gui work.tb_simple_generic_matrix_mult 
+# Start time: 15:12:14 on Oct 23,2025
+# Loading work.tb_simple_generic_matrix_mult
+# Loading work.simple_generic_matrix_mult
 run -all
+# Testing           3x          3 ×           3x          3 matrix multiplication
 # 
-# === Hill Cipher Cryptography Test ===
-# Block size: 3 characters
+# Matrix A (          3x          3):
 # 
-# Loading encryption key matrix...
-# Loading plaintext: ACT
+#   1   0   0 
+#   0   1   0 
+#   0   0   1 
 # 
-# Starting encryption...
+# Matrix B (          3x          3):
 # 
-# --- Encryption Result ---
-# Ciphertext: POH
+#   1   2   3 
+#   4   5   6 
+#   7   8   9 
 # 
-# === Hill Cipher Test Complete ===
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v(108)
-#    Time: 435 ns  Iteration: 0  Instance: /tb_hill_cipher
+# Result C (          3x          3):
+# 
+#   1   1   1 
+#   1   2   2 
+#   2   2   3 
+# 
+# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v(118)
+#    Time: 605 ns  Iteration: 0  Instance: /tb_simple_generic_matrix_mult
 # 1
-# Break in Module tb_hill_cipher at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v line 108
+# Break in Module tb_simple_generic_matrix_mult at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v line 118
 quit -sim
-# End time: 08:29:45 on Oct 23,2025, Elapsed time: 0:01:15
+# End time: 15:14:49 on Oct 23,2025, Elapsed time: 0:02:35
+# Errors: 0, Warnings: 4
+# Compile of tb_matrix_multiplier.v was successful.
+# Compile of matrix_multiplier.v was successful.
+# Compile of tb_linear_equation_solver.v was successful.
+# Compile of linear_equation_solver.v was successful.
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v was successful.
+# 8 compiles, 0 failed with no errors.
+vsim -gui work.tb_simple_generic_matrix_mult
+# vsim -gui work.tb_simple_generic_matrix_mult 
+# Start time: 15:15:20 on Oct 23,2025
+# Loading work.tb_simple_generic_matrix_mult
+# Loading work.simple_generic_matrix_mult
+run -all
+# Testing           3x          3 ×           3x          3 matrix multiplication
+# 
+# Matrix A (          3x          3):
+# 
+#   1   0   0 
+#   0   1   0 
+#   0   0   1 
+# 
+# Matrix B (          3x          3):
+# 
+#   1   2   3 
+#   4   5   6 
+#   7   8   9 
+# 
+# Result C (          3x          3):
+# 
+#   1   1   1 
+#   1   2   2 
+#   2   2   3 
+# 
+# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v(118)
+#    Time: 605 ns  Iteration: 0  Instance: /tb_simple_generic_matrix_mult
+# 1
+# Break in Module tb_simple_generic_matrix_mult at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v line 118
+quit -sim
+# End time: 15:16:29 on Oct 23,2025, Elapsed time: 0:01:09
 # Errors: 0, Warnings: 2
 # Compile of tb_matrix_multiplier.v was successful.
 # Compile of matrix_multiplier.v was successful.
@@ -37,33 +88,41 @@ quit -sim
 # Compile of linear_equation_solver.v was successful.
 # Compile of hill_cipher_crypto.v was successful.
 # Compile of tb_hill_cipher.v was successful.
-# 6 compiles, 0 failed with no errors.
-vsim -gui work.tb_hill_cipher
-# vsim -gui work.tb_hill_cipher 
-# Start time: 08:32:26 on Oct 23,2025
-# Loading work.tb_hill_cipher
-# Loading work.hill_cipher_crypto
-# Loading work.matrix_multiplier
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v was successful.
+# 8 compiles, 0 failed with no errors.
+vsim -gui work.tb_simple_generic_matrix_mult
+# vsim -gui work.tb_simple_generic_matrix_mult 
+# Start time: 15:21:08 on Oct 23,2025
+# Loading work.tb_simple_generic_matrix_mult
+# Loading work.simple_generic_matrix_mult
 run -all
+# Testing 3x3 × 3x3 matrix multiplication
 # 
-# === Hill Cipher Cryptography Test ===
-# Block size: 3 characters
+# Matrix A (3x3):
 # 
-# Loading encryption key matrix...
-# Loading plaintext: ACT
+#    1    0    0 
+#    0    1    0 
+#    0    0    1 
 # 
-# Starting encryption...
+# Matrix B (3x3):
 # 
-# --- Encryption Result ---
-# Ciphertext: AAB
+#    1    2    3 
+#    4    5    6 
+#    7    8    9 
 # 
-# === Hill Cipher Test Complete ===
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v(108)
-#    Time: 585 ns  Iteration: 0  Instance: /tb_hill_cipher
+# Result C (3x3):
+# 
+#    1    1    1 
+#    1    1    2 
+#    2    2    2 
+# 
+# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v(131)
+#    Time: 715 ns  Iteration: 0  Instance: /tb_simple_generic_matrix_mult
 # 1
-# Break in Module tb_hill_cipher at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v line 108
+# Break in Module tb_simple_generic_matrix_mult at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v line 131
 quit -sim
-# End time: 08:34:08 on Oct 23,2025, Elapsed time: 0:01:42
+# End time: 15:22:15 on Oct 23,2025, Elapsed time: 0:01:07
 # Errors: 0, Warnings: 2
 # Compile of tb_matrix_multiplier.v was successful.
 # Compile of matrix_multiplier.v was successful.
@@ -71,65 +130,113 @@ quit -sim
 # Compile of linear_equation_solver.v was successful.
 # Compile of hill_cipher_crypto.v was successful.
 # Compile of tb_hill_cipher.v was successful.
-# 6 compiles, 0 failed with no errors.
-vsim -gui work.tb_hill_cipher
-# vsim -gui work.tb_hill_cipher 
-# Start time: 08:34:37 on Oct 23,2025
-# Loading work.tb_hill_cipher
-# Loading work.hill_cipher_crypto
-# Loading work.matrix_multiplier
-run -all
-# 
-# === Hill Cipher Cryptography Test ===
-# Block size: 3 characters
-# 
-# Loading encryption key matrix...
-# Loading plaintext: ACT
-# 
-# Starting encryption...
-# 
-# --- Encryption Result ---
-# Ciphertext: AAB
-# 
-# === Hill Cipher Test Complete ===
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v(108)
-#    Time: 615 ns  Iteration: 0  Instance: /tb_hill_cipher
-# 1
-# Break in Module tb_hill_cipher at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v line 108
-quit -sim
-# End time: 08:37:24 on Oct 23,2025, Elapsed time: 0:02:47
-# Errors: 0, Warnings: 2
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v failed with 2 errors.
+# 8 compiles, 1 failed with 2 errors.
 # Compile of tb_matrix_multiplier.v was successful.
 # Compile of matrix_multiplier.v was successful.
 # Compile of tb_linear_equation_solver.v was successful.
 # Compile of linear_equation_solver.v was successful.
 # Compile of hill_cipher_crypto.v was successful.
 # Compile of tb_hill_cipher.v was successful.
-# 6 compiles, 0 failed with no errors.
-vsim -gui work.tb_hill_cipher
-# vsim -gui work.tb_hill_cipher 
-# Start time: 08:38:04 on Oct 23,2025
-# Loading work.tb_hill_cipher
-# Loading work.hill_cipher_crypto
-# Loading work.matrix_multiplier
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v was successful.
+# 8 compiles, 0 failed with no errors.
+vsim -gui work.tb_simple_generic_matrix_mult
+# vsim -gui work.tb_simple_generic_matrix_mult 
+# Start time: 15:26:32 on Oct 23,2025
+# Loading work.tb_simple_generic_matrix_mult
+# Loading work.simple_generic_matrix_mult
 run -all
 # 
-# === Hill Cipher Cryptography Test ===
-# Block size: 3 characters
+# Matrix A (3x3):
+#    1    0    0 
+#    0    1    0 
+#    0    0    1 
 # 
-# Loading encryption key matrix...
-# Loading plaintext: ACT
+# Matrix B (3x3):
+#    1    2    3 
+#    4    5    6 
+#    7    8    9 
 # 
-# Starting encryption...
+# Expected Result C (3x3):
+#      1      2      3 
+#      4      5      6 
+#      7      8      9 
 # 
-# --- Encryption Result ---
-# Ciphertext: AAB
+# DUT Result C (3x3) (captured 9 values):
 # 
-# === Hill Cipher Test Complete ===
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v(108)
-#    Time: 615 ns  Iteration: 0  Instance: /tb_hill_cipher
+#      1      1      1 
+#      1      1      2 
+#      2      2      2 
+# 
+# Mismatch at idx 1 (r0 c1): DUT=1 expected=2
+# Mismatch at idx 2 (r0 c2): DUT=1 expected=3
+# Mismatch at idx 3 (r1 c0): DUT=1 expected=4
+# Mismatch at idx 4 (r1 c1): DUT=1 expected=5
+# Mismatch at idx 5 (r1 c2): DUT=2 expected=6
+# Mismatch at idx 6 (r2 c0): DUT=2 expected=7
+# Mismatch at idx 7 (r2 c1): DUT=2 expected=8
+# Mismatch at idx 8 (r2 c2): DUT=2 expected=9
+# >>> TEST FAIL: 8 errors found.
+# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v(365)
+#    Time: 775 ns  Iteration: 1  Instance: /tb_simple_generic_matrix_mult
 # 1
-# Break in Module tb_hill_cipher at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v line 108
+# Break in Module tb_simple_generic_matrix_mult at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v line 365
 quit -sim
-# End time: 11:06:01 on Oct 23,2025, Elapsed time: 2:27:57
-# Errors: 0, Warnings: 2
+# End time: 15:27:24 on Oct 23,2025, Elapsed time: 0:00:52
+# Errors: 0, Warnings: 3
+# Compile of tb_matrix_multiplier.v was successful.
+# Compile of matrix_multiplier.v was successful.
+# Compile of tb_linear_equation_solver.v was successful.
+# Compile of linear_equation_solver.v was successful.
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v was successful.
+# 8 compiles, 0 failed with no errors.
+# Compile of tb_matrix_multiplier.v was successful.
+# Compile of matrix_multiplier.v was successful.
+# Compile of tb_linear_equation_solver.v was successful.
+# Compile of linear_equation_solver.v was successful.
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v was successful.
+# 8 compiles, 0 failed with no errors.
+vsim -gui work.tb_simple_generic_matrix_mult
+# vsim -gui work.tb_simple_generic_matrix_mult 
+# Start time: 15:33:32 on Oct 23,2025
+# Loading work.tb_simple_generic_matrix_mult
+# Loading work.simple_generic_matrix_mult
+run -all
+# 
+# Matrix A (3x3):
+#    1    0    0 
+#    0    1    0 
+#    0    0    1 
+# 
+# Matrix B (3x3):
+#    1    2    3 
+#    4    5    6 
+#    7    8    9 
+# 
+# Expected Result C (3x3):
+#      1      2      3 
+#      4      5      6 
+#      7      8      9 
+# 
+# DUT Result C (3x3) (captured 9 values):
+# 
+#      1      2      3 
+#      4      5      6 
+#      7      8      9 
+# 
+# >>> TEST PASS: All 9 outputs match expected results.
+# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v(381)
+#    Time: 775 ns  Iteration: 1  Instance: /tb_simple_generic_matrix_mult
+# 1
+# Break in Module tb_simple_generic_matrix_mult at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v line 381
+quit -sim
+# End time: 15:34:51 on Oct 23,2025, Elapsed time: 0:01:19
+# Errors: 0, Warnings: 4

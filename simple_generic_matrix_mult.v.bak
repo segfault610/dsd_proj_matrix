@@ -1,0 +1,131 @@
+//===========================================================
+// CORRECTED Generic M×N × N×P Matrix Multiplier
+// Fixed accumulator width and overflow issues
+//===========================================================
+
+module simple_generic_matrix_mult #(
+    parameter M = 3,           // Rows in A
+    parameter N = 3,           // Cols in A, Rows in B
+    parameter P = 3,           // Cols in B
+    parameter DATA_WIDTH = 8
+)(
+    input wire clk,
+    input wire rst,
+    input wire start,
+    
+    // Memory interface
+    input wire [DATA_WIDTH-1:0] a_in,
+    input wire [$clog2(M*N)-1:0] a_addr,
+    input wire a_wen,
+    
+    input wire [DATA_WIDTH-1:0] b_in,
+    input wire [$clog2(N*P)-1:0] b_addr,
+    input wire b_wen,
+    
+    // Output interface
+    output reg [2*DATA_WIDTH-1:0] c_out,  // MUST be double width!
+    output reg c_valid,
+    output reg done
+);
+
+    // Internal memories
+    reg [DATA_WIDTH-1:0] A [0:M*N-1];
+    reg [DATA_WIDTH-1:0] B [0:N*P-1];
+    
+    // Loop counters - MUST be sized properly!
+    reg [$clog2(M):0] row;       // +1 bit for comparison
+    reg [$clog2(P):0] col;       // +1 bit for comparison
+    reg [$clog2(N):0] k_count;   // +1 bit for comparison
+    
+    // Accumulator - MUST be wide enough for sum of products
+    // Worst case: N products of (2*DATA_WIDTH) bits
+    reg [2*DATA_WIDTH + $clog2(N):0] accumulator;
+    
+    // States
+    localparam IDLE    = 0;
+    localparam COMPUTE = 1;
+    localparam OUTPUT  = 2;
+    localparam DONE_ST = 3;
+    
+    reg [1:0] state;
+    
+    // Write to memories
+    always @(posedge clk) begin
+        if (a_wen)
+            A[a_addr] <= a_in;
+        if (b_wen)
+            B[b_addr] <= b_in;
+    end
+    
+    // Main FSM
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            state <= IDLE;
+            row <= 0;
+            col <= 0;
+            k_count <= 0;
+            accumulator <= 0;
+            c_valid <= 0;
+            done <= 0;
+            c_out <= 0;
+        end else begin
+            case (state)
+                IDLE: begin
+                    c_valid <= 0;
+                    done <= 0;
+                    if (start) begin
+                        row <= 0;
+                        col <= 0;
+                        k_count <= 0;
+                        accumulator <= 0;
+                        state <= COMPUTE;
+                    end
+                end
+                
+                COMPUTE: begin
+                    // Perform multiply-accumulate
+                    // CRITICAL: Cast to wide enough type before multiply
+                    accumulator <= accumulator + 
+                        ($signed(A[row*N + k_count]) * $signed(B[k_count*P + col]));
+                    
+                    if (k_count == N-1) begin
+                        state <= OUTPUT;
+                    end else begin
+                        k_count <= k_count + 1;
+                    end
+                end
+                
+                OUTPUT: begin
+                    // Output the result (truncate back to 2*DATA_WIDTH)
+                    c_out <= accumulator[2*DATA_WIDTH-1:0];
+                    c_valid <= 1;
+                    accumulator <= 0;
+                    k_count <= 0;
+                    
+                    // Move to next position
+                    if (col == P-1) begin
+                        col <= 0;
+                        if (row == M-1) begin
+                            state <= DONE_ST;
+                        end else begin
+                            row <= row + 1;
+                            state <= COMPUTE;
+                        end
+                    end else begin
+                        col <= col + 1;
+                        state <= COMPUTE;
+                    end
+                end
+                
+                DONE_ST: begin
+                    c_valid <= 0;
+                    done <= 1;
+                    if (!start)
+                        state <= IDLE;
+                end
+            endcase
+        end
+    end
+
+endmodule
+
