@@ -1,403 +1,135 @@
-vsim -gui work.tb_linear_equation_solver
-# vsim -gui work.tb_linear_equation_solver 
-# Start time: 16:10:34 on Oct 22,2025
-# Loading work.tb_linear_equation_solver
-# Loading work.linear_equation_solver_3x3
-add wave *
-run -all
-# Starting Testbench...
-# Reset released. Loading matrices...
-# Matrix A loaded.
-# Vector b loaded.
-# Start signal pulsed. Waiting for 'done'...
-# Solver finished.
-# -----------------------------------------
-# Expected solution (fixed-point): x0=        512, x1=        768, x2=       1024
-# Actual solution (fixed-point):   x0=  510, x1=  878, x2= 1214
-# Actual solution (integer approx): x0=     1, x1=     3, x2=     4
-# -----------------------------------------
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v(143)
-#    Time: 1195 ns  Iteration: 1  Instance: /tb_linear_equation_solver
-# 1
-# Break in Module tb_linear_equation_solver at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v line 143
-quit -sim
-# End time: 16:12:34 on Oct 22,2025, Elapsed time: 0:02:00
-# Errors: 0, Warnings: 1
-# Compile of tb_matrix_multiplier.v was successful.
-# Compile of matrix_multiplier.v failed with 13 errors.
-# Compile of linear_equation_solver.v was successful.
-# Compile of tb_linear_equation_solver.v was successful.
-# 4 compiles, 1 failed with 13 errors.
 # Compile of tb_matrix_multiplier.v was successful.
 # Compile of matrix_multiplier.v was successful.
-# Compile of linear_equation_solver.v was successful.
 # Compile of tb_linear_equation_solver.v was successful.
-# 4 compiles, 0 failed with no errors.
-vsim -gui work.tb_linear_equation_solver
-# vsim -gui work.tb_linear_equation_solver 
-# Start time: 16:18:42 on Oct 22,2025
-# Loading work.tb_linear_equation_solver
-# Loading work.linear_equation_solver_3x3
-add wave *
-run -all
-# Starting Testbench...
-# Reset released. Loading matrices...
-# Matrix A loaded.
-# Vector b loaded.
-# Start signal pulsed. Waiting for 'done'...
-# Solver finished.
-# -----------------------------------------
-# Expected solution (fixed-point): x0=        512, x1=        768, x2=       1024
-# Actual solution (fixed-point):   x0=  510, x1=  878, x2= 1214
-# Actual solution (integer approx): x0=     1, x1=     3, x2=     4
-# -----------------------------------------
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v(143)
-#    Time: 1195 ns  Iteration: 1  Instance: /tb_linear_equation_solver
-# 1
-# Break in Module tb_linear_equation_solver at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v line 143
-quit -sim
-# End time: 16:20:44 on Oct 22,2025, Elapsed time: 0:02:02
-# Errors: 0, Warnings: 3
-# Compile of tb_matrix_multiplier.v was successful.
-# Compile of matrix_multiplier.v was successful.
 # Compile of linear_equation_solver.v was successful.
-# Compile of tb_linear_equation_solver.v was successful.
-# 4 compiles, 0 failed with no errors.
-vsim -gui work.tb_linear_equation_solver
-# vsim -gui work.tb_linear_equation_solver 
-# Start time: 16:21:20 on Oct 22,2025
-# Loading work.tb_linear_equation_solver
-# Loading work.linear_equation_solver_3x3
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# 6 compiles, 0 failed with no errors.
+vsim -gui work.tb_hill_cipher
+# vsim -gui work.tb_hill_cipher 
+# Start time: 08:28:30 on Oct 23,2025
+# Loading work.tb_hill_cipher
+# Loading work.hill_cipher_crypto
 run -all
-# Starting Testbench...
-# Reset released. Loading matrices...
-# Matrix A loaded.
-# Vector b loaded.
-# Start signal pulsed. Waiting for 'done'...
-# Solver finished.
-# -----------------------------------------
-# Expected solution (fixed-point): x0=        512, x1=        768, x2=       1024
-# Actual solution (fixed-point):   x0=  510, x1=  878, x2= 1214
-# Actual solution (integer approx): x0=     1, x1=     3, x2=     4
-# -----------------------------------------
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v(88)
-#    Time: 1195 ns  Iteration: 1  Instance: /tb_linear_equation_solver
+# 
+# === Hill Cipher Cryptography Test ===
+# Block size: 3 characters
+# 
+# Loading encryption key matrix...
+# Loading plaintext: ACT
+# 
+# Starting encryption...
+# 
+# --- Encryption Result ---
+# Ciphertext: POH
+# 
+# === Hill Cipher Test Complete ===
+# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v(108)
+#    Time: 435 ns  Iteration: 0  Instance: /tb_hill_cipher
 # 1
-# Break in Module tb_linear_equation_solver at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v line 88
+# Break in Module tb_hill_cipher at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v line 108
 quit -sim
-# End time: 16:22:13 on Oct 22,2025, Elapsed time: 0:00:53
+# End time: 08:29:45 on Oct 23,2025, Elapsed time: 0:01:15
 # Errors: 0, Warnings: 2
 # Compile of tb_matrix_multiplier.v was successful.
 # Compile of matrix_multiplier.v was successful.
-# Compile of linear_equation_solver.v was successful.
 # Compile of tb_linear_equation_solver.v was successful.
-# 4 compiles, 0 failed with no errors.
-vsim -gui work.tb_linear_equation_solver
-# vsim -gui work.tb_linear_equation_solver 
-# Start time: 16:22:42 on Oct 22,2025
-# Loading work.tb_linear_equation_solver
-# Loading work.linear_equation_solver_3x3
+# Compile of linear_equation_solver.v was successful.
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# 6 compiles, 0 failed with no errors.
+vsim -gui work.tb_hill_cipher
+# vsim -gui work.tb_hill_cipher 
+# Start time: 08:32:26 on Oct 23,2025
+# Loading work.tb_hill_cipher
+# Loading work.hill_cipher_crypto
 # Loading work.matrix_multiplier
-# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (4) for port 'mat_b_addr'. The port definition is at: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v(18).
-#    Time: 0 ps  Iteration: 0  Instance: /tb_linear_equation_solver/dut/matmul File: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v Line: 57
 run -all
-# Starting Testbench...
-# Reset released. Loading matrices...
-# Matrix A loaded.
-# Vector b loaded.
-# Start signal pulsed. Waiting for 'done'...
-# Solver finished.
-# -----------------------------------------
-# Expected solution (fixed-point): x0=        512, x1=        768, x2=       1024
-# Actual solution (fixed-point):   x0=  510, x1=  878, x2= 1214
-# Actual solution (integer approx): x0=     1, x1=     3, x2=     4
-# -----------------------------------------
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v(88)
-#    Time: 29465 ns  Iteration: 1  Instance: /tb_linear_equation_solver
+# 
+# === Hill Cipher Cryptography Test ===
+# Block size: 3 characters
+# 
+# Loading encryption key matrix...
+# Loading plaintext: ACT
+# 
+# Starting encryption...
+# 
+# --- Encryption Result ---
+# Ciphertext: AAB
+# 
+# === Hill Cipher Test Complete ===
+# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v(108)
+#    Time: 585 ns  Iteration: 0  Instance: /tb_hill_cipher
 # 1
-# Break in Module tb_linear_equation_solver at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v line 88
+# Break in Module tb_hill_cipher at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v line 108
 quit -sim
-# End time: 16:23:09 on Oct 22,2025, Elapsed time: 0:00:27
-# Errors: 0, Warnings: 3
-# Compile of tb_matrix_multiplier.v was successful.
-# Compile of matrix_multiplier.v was successful.
-# Compile of linear_equation_solver.v was successful.
-# Compile of tb_linear_equation_solver.v was successful.
-# 4 compiles, 0 failed with no errors.
-vsim -gui work.tb_linear_equation_solver
-# vsim -gui work.tb_linear_equation_solver 
-# Start time: 16:23:24 on Oct 22,2025
-# Loading work.tb_linear_equation_solver
-# Loading work.linear_equation_solver_3x3
-# Loading work.matrix_multiplier
-# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (4) for port 'mat_b_addr'. The port definition is at: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v(18).
-#    Time: 0 ps  Iteration: 0  Instance: /tb_linear_equation_solver/dut/matmul File: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v Line: 57
-run -all
-# Starting Testbench...
-# Reset released. Loading matrices...
-# Matrix A loaded.
-# Vector b loaded.
-# Start signal pulsed. Waiting for 'done'...
-# Solver finished.
-# -----------------------------------------
-# Expected solution (fixed-point): x0=        512, x1=        768, x2=       1024
-# Actual solution (fixed-point):   x0=  510, x1=  878, x2= 1214
-# Actual solution (integer approx): x0=     1, x1=     3, x2=     4
-# -----------------------------------------
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v(88)
-#    Time: 29465 ns  Iteration: 1  Instance: /tb_linear_equation_solver
-# 1
-# Break in Module tb_linear_equation_solver at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v line 88
-quit -sim
-# End time: 16:25:08 on Oct 22,2025, Elapsed time: 0:01:44
-# Errors: 0, Warnings: 3
-# Compile of tb_matrix_multiplier.v was successful.
-# Compile of matrix_multiplier.v was successful.
-# Compile of linear_equation_solver.v was successful.
-# Compile of tb_linear_equation_solver.v was successful.
-# 4 compiles, 0 failed with no errors.
-vsim -gui work.tb_linear_equation_solver
-# vsim -gui work.tb_linear_equation_solver 
-# Start time: 16:25:30 on Oct 22,2025
-# Loading work.tb_linear_equation_solver
-# Loading work.linear_equation_solver_3x3
-# Loading work.matrix_multiplier
-# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (4) for port 'mat_b_addr'. The port definition is at: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v(18).
-#    Time: 0 ps  Iteration: 0  Instance: /tb_linear_equation_solver/dut/matmul File: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v Line: 62
-run -all
-# Starting Testbench...
-# Reset released. Loading matrices...
-# Matrix A loaded.
-# Vector b loaded.
-# Start signal pulsed. Waiting for 'done'...
-# Solver finished.
-# -----------------------------------------
-# Expected solution (fixed-point): x0=        512, x1=        768, x2=       1024
-# Actual solution (fixed-point):   x0= 1817, x1=16735, x2=58562
-# Actual solution (integer approx): x0=     7, x1=    65, x2=   -28
-# -----------------------------------------
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v(88)
-#    Time: 29465 ns  Iteration: 1  Instance: /tb_linear_equation_solver
-# 1
-# Break in Module tb_linear_equation_solver at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v line 88
-quit -sim
-# End time: 16:26:57 on Oct 22,2025, Elapsed time: 0:01:27
-# Errors: 0, Warnings: 3
-# Compile of tb_matrix_multiplier.v was successful.
-# Compile of matrix_multiplier.v was successful.
-# Compile of linear_equation_solver.v was successful.
-# Compile of tb_linear_equation_solver.v was successful.
-# 4 compiles, 0 failed with no errors.
-vsim -gui work.tb_linear_equation_solver
-# vsim -gui work.tb_linear_equation_solver 
-# Start time: 16:27:17 on Oct 22,2025
-# Loading work.tb_linear_equation_solver
-# Loading work.linear_equation_solver_3x3
-# Loading work.matrix_multiplier
-# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (4) for port 'mat_b_addr'. The port definition is at: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v(18).
-#    Time: 0 ps  Iteration: 0  Instance: /tb_linear_equation_solver/dut/matmul File: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v Line: 63
-run -all
-# Starting Testbench...
-# Reset released. Loading matrices...
-# Matrix A loaded.
-# Vector b loaded.
-# Start signal pulsed. Waiting for 'done'...
-# Solver finished.
-# -----------------------------------------
-# Expected solution (fixed-point): x0=        512, x1=        768, x2=       1024
-# Actual solution (fixed-point):   x0= 2615, x1=24965, x2= 3319
-# Actual solution (integer approx): x0=    10, x1=    97, x2=    12
-# -----------------------------------------
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v(88)
-#    Time: 29465 ns  Iteration: 1  Instance: /tb_linear_equation_solver
-# 1
-# Break in Module tb_linear_equation_solver at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v line 88
-quit -sim
-# End time: 16:28:26 on Oct 22,2025, Elapsed time: 0:01:09
-# Errors: 0, Warnings: 3
-# Compile of tb_matrix_multiplier.v was successful.
-# Compile of matrix_multiplier.v was successful.
-# Compile of linear_equation_solver.v was successful.
-# Compile of tb_linear_equation_solver.v was successful.
-# 4 compiles, 0 failed with no errors.
-vsim -gui work.tb_linear_equation_solver
-# vsim -gui work.tb_linear_equation_solver 
-# Start time: 16:30:03 on Oct 22,2025
-# Loading work.tb_linear_equation_solver
-# Loading work.linear_equation_solver_3x3
-run -all
-# Starting Testbench...
-# Reset released. Loading matrices...
-# Matrix A loaded.
-# Vector b loaded.
-# Start signal pulsed. Waiting for 'done'...
-# Solver finished.
-# -----------------------------------------
-# Expected solution (fixed-point): x0=        512, x1=        768, x2=       1024
-# Actual solution (fixed-point):   x0=42077, x1=13405, x2=58461
-# Actual solution (integer approx): x0=   -92, x1=    52, x2=   -28
-# -----------------------------------------
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v(88)
-#    Time: 1195 ns  Iteration: 1  Instance: /tb_linear_equation_solver
-# 1
-# Break in Module tb_linear_equation_solver at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v line 88
-# A time value could not be extracted from the current line
-quit -sim
-# End time: 18:50:24 on Oct 22,2025, Elapsed time: 2:20:21
+# End time: 08:34:08 on Oct 23,2025, Elapsed time: 0:01:42
 # Errors: 0, Warnings: 2
 # Compile of tb_matrix_multiplier.v was successful.
 # Compile of matrix_multiplier.v was successful.
-# Compile of linear_equation_solver.v failed with 11 errors.
-# Compile of tb_linear_equation_solver.v was successful.
-# 4 compiles, 1 failed with 11 errors.
-# Compile of tb_matrix_multiplier.v was successful.
-# Compile of matrix_multiplier.v was successful.
-# Compile of tb_linear_equation_solver.v was successful.
-# Compile of linear_equation_solver.v failed with 5 errors.
-# 4 compiles, 1 failed with 5 errors.
-# Compile of tb_matrix_multiplier.v was successful.
-# Compile of matrix_multiplier.v was successful.
 # Compile of tb_linear_equation_solver.v was successful.
 # Compile of linear_equation_solver.v was successful.
-# 4 compiles, 0 failed with no errors.
-vsim -gui work.tb_linear_equation_solver
-# vsim -gui work.tb_linear_equation_solver 
-# Start time: 18:57:35 on Oct 22,2025
-# Loading work.tb_linear_equation_solver
-# Loading work.linear_equation_solver_3x3
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# 6 compiles, 0 failed with no errors.
+vsim -gui work.tb_hill_cipher
+# vsim -gui work.tb_hill_cipher 
+# Start time: 08:34:37 on Oct 23,2025
+# Loading work.tb_hill_cipher
+# Loading work.hill_cipher_crypto
 # Loading work.matrix_multiplier
-# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (4) for port 'mat_b_addr'. The port definition is at: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v(18).
-#    Time: 0 ps  Iteration: 0  Instance: /tb_linear_equation_solver/dut/mm File: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v Line: 60
 run -all
-# Starting Testbench...
-# Reset released. Loading matrices...
-# Matrix A loaded.
-# Vector b loaded.
-# Start signal pulsed. Waiting for 'done'...
-# Solver finished.
-# -----------------------------------------
-# Expected solution (fixed-point): x0=        512, x1=        768, x2=       1024
-# Actual solution (fixed-point):   x0=32169, x1=50491, x2=   92
-# Actual solution (integer approx): x0=   125, x1=   -59, x2=     0
-# -----------------------------------------
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v(88)
-#    Time: 29475 ns  Iteration: 1  Instance: /tb_linear_equation_solver
+# 
+# === Hill Cipher Cryptography Test ===
+# Block size: 3 characters
+# 
+# Loading encryption key matrix...
+# Loading plaintext: ACT
+# 
+# Starting encryption...
+# 
+# --- Encryption Result ---
+# Ciphertext: AAB
+# 
+# === Hill Cipher Test Complete ===
+# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v(108)
+#    Time: 615 ns  Iteration: 0  Instance: /tb_hill_cipher
 # 1
-# Break in Module tb_linear_equation_solver at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v line 88
+# Break in Module tb_hill_cipher at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v line 108
 quit -sim
-# End time: 18:59:52 on Oct 22,2025, Elapsed time: 0:02:17
-# Errors: 0, Warnings: 7
+# End time: 08:37:24 on Oct 23,2025, Elapsed time: 0:02:47
+# Errors: 0, Warnings: 2
 # Compile of tb_matrix_multiplier.v was successful.
 # Compile of matrix_multiplier.v was successful.
 # Compile of tb_linear_equation_solver.v was successful.
 # Compile of linear_equation_solver.v was successful.
-# 4 compiles, 0 failed with no errors.
-vsim -gui work.tb_linear_equation_solver
-# vsim -gui work.tb_linear_equation_solver 
-# Start time: 19:02:25 on Oct 22,2025
-# Loading work.tb_linear_equation_solver
-# Loading work.linear_equation_solver_3x3
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# 6 compiles, 0 failed with no errors.
+vsim -gui work.tb_hill_cipher
+# vsim -gui work.tb_hill_cipher 
+# Start time: 08:38:04 on Oct 23,2025
+# Loading work.tb_hill_cipher
+# Loading work.hill_cipher_crypto
 # Loading work.matrix_multiplier
-# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (4) for port 'mat_b_addr'. The port definition is at: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v(18).
-#    Time: 0 ps  Iteration: 0  Instance: /tb_linear_equation_solver/dut/matmul File: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v Line: 59
 run -all
-# Starting Testbench...
-# Reset released. Loading matrices...
-# Matrix A loaded.
-# Vector b loaded.
-# Start signal pulsed. Waiting for 'done'...
-# Solver finished.
-# -----------------------------------------
-# Expected solution (fixed-point): x0=        512, x1=        768, x2=       1024
-# Actual solution (fixed-point):   x0=  510, x1=  878, x2= 1214
-# Actual solution (integer approx): x0=     1, x1=     3, x2=     4
-# -----------------------------------------
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v(88)
-#    Time: 29465 ns  Iteration: 1  Instance: /tb_linear_equation_solver
+# 
+# === Hill Cipher Cryptography Test ===
+# Block size: 3 characters
+# 
+# Loading encryption key matrix...
+# Loading plaintext: ACT
+# 
+# Starting encryption...
+# 
+# --- Encryption Result ---
+# Ciphertext: AAB
+# 
+# === Hill Cipher Test Complete ===
+# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v(108)
+#    Time: 615 ns  Iteration: 0  Instance: /tb_hill_cipher
 # 1
-# Break in Module tb_linear_equation_solver at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v line 88
+# Break in Module tb_hill_cipher at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v line 108
 quit -sim
-# End time: 19:05:13 on Oct 22,2025, Elapsed time: 0:02:48
-# Errors: 0, Warnings: 3
-# Compile of tb_matrix_multiplier.v was successful.
-# Compile of matrix_multiplier.v was successful.
-# Compile of tb_linear_equation_solver.v was successful.
-# Compile of linear_equation_solver.v failed with 7 errors.
-# 4 compiles, 1 failed with 7 errors.
-# Compile of tb_matrix_multiplier.v was successful.
-# Compile of matrix_multiplier.v was successful.
-# Compile of tb_linear_equation_solver.v was successful.
-# Compile of linear_equation_solver.v failed with 5 errors.
-# 4 compiles, 1 failed with 5 errors.
-# Compile of tb_matrix_multiplier.v was successful.
-# Compile of matrix_multiplier.v was successful.
-# Compile of tb_linear_equation_solver.v was successful.
-# Compile of linear_equation_solver.v was successful.
-# 4 compiles, 0 failed with no errors.
-# Load canceled
-# Compile of tb_matrix_multiplier.v was successful.
-# Compile of matrix_multiplier.v was successful.
-# Compile of tb_linear_equation_solver.v was successful.
-# Compile of linear_equation_solver.v was successful.
-# 4 compiles, 0 failed with no errors.
-vsim -gui work.tb_linear_equation_solver
-# vsim -gui work.tb_linear_equation_solver 
-# Start time: 19:07:30 on Oct 22,2025
-# Loading work.tb_linear_equation_solver
-# Loading work.linear_equation_solver_3x3
-# Loading work.matrix_multiplier
-# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (4) for port 'mat_b_addr'. The port definition is at: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v(18).
-#    Time: 0 ps  Iteration: 0  Instance: /tb_linear_equation_solver/dut/matmul File: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v Line: 59
-run -all
-# Starting Testbench...
-# Reset released. Loading matrices...
-# Matrix A loaded.
-# Vector b loaded.
-# Start signal pulsed. Waiting for 'done'...
-# Solver finished.
-# -----------------------------------------
-# Expected solution (fixed-point): x0=       2048, x1=       3072, x2=       4096
-# Actual solution (fixed-point):   x0= 2848, x1=62348, x2=63010
-# Actual solution (integer approx): x0=     2, x1=    -4, x2=    -3
-# -----------------------------------------
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v(88)
-#    Time: 29465 ns  Iteration: 1  Instance: /tb_linear_equation_solver
-# 1
-# Break in Module tb_linear_equation_solver at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v line 88
-quit -sim
-# End time: 19:07:52 on Oct 22,2025, Elapsed time: 0:00:22
-# Errors: 0, Warnings: 6
-# Compile of tb_matrix_multiplier.v was successful.
-# Compile of matrix_multiplier.v was successful.
-# Compile of tb_linear_equation_solver.v was successful.
-# Compile of linear_equation_solver.v was successful.
-# 4 compiles, 0 failed with no errors.
-# Compile of tb_matrix_multiplier.v was successful.
-# Compile of matrix_multiplier.v was successful.
-# Compile of tb_linear_equation_solver.v was successful.
-# Compile of linear_equation_solver.v was successful.
-# 4 compiles, 0 failed with no errors.
-vsim -gui work.tb_linear_equation_solver
-# vsim -gui work.tb_linear_equation_solver 
-# Start time: 19:08:39 on Oct 22,2025
-# Loading work.tb_linear_equation_solver
-# Loading work.linear_equation_solver_3x3
-# Loading work.matrix_multiplier
-# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (4) for port 'mat_b_addr'. The port definition is at: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_multiplier.v(18).
-#    Time: 0 ps  Iteration: 0  Instance: /tb_linear_equation_solver/dut/matmul File: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v Line: 59
-run -all
-# Starting Testbench...
-# Reset released. Loading matrices...
-# Matrix A loaded.
-# Vector b loaded.
-# Start signal pulsed. Waiting for 'done'...
-# Solver finished.
-# -----------------------------------------
-# Expected solution (fixed-point): x0=        512, x1=        768, x2=       1024
-# Actual solution (fixed-point):   x0=  510, x1=  878, x2= 1214
-# Actual solution (integer approx): x0=     1, x1=     3, x2=     4
-# -----------------------------------------
-# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v(88)
-#    Time: 29465 ns  Iteration: 1  Instance: /tb_linear_equation_solver
-# 1
-# Break in Module tb_linear_equation_solver at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_linear_equation_solver.v line 88
+# End time: 11:06:01 on Oct 23,2025, Elapsed time: 2:27:57
+# Errors: 0, Warnings: 2

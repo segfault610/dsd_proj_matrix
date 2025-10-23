@@ -1,0 +1,201 @@
+`timescale 1ns/1ps
+
+module hill_cipher_crypto #(
+    parameter BLOCK_SIZE = 3,
+    parameter DATA_WIDTH = 8,      // external char width (ASCII letters)
+    parameter MM_DWIDTH  = 16     // internal multiplier/data width (must be wide enough for sums)
+)(
+    input wire clk,
+    input wire rst,
+    input wire start,
+    input wire mode,              // 0=Encrypt, 1=Decrypt (not implemented)
+
+    // Key matrix input (3x3)
+    input wire [DATA_WIDTH-1:0] key_data,
+    input wire [$clog2(BLOCK_SIZE*BLOCK_SIZE)-1:0] key_addr,
+    input wire key_wen,
+
+    // Plaintext or ciphertext vector (3x1)
+    input wire [DATA_WIDTH-1:0] text_in,
+    input wire [$clog2(BLOCK_SIZE)-1:0] text_in_addr,
+    input wire text_in_wen,
+
+    // Ciphertext or plaintext output
+    output reg [DATA_WIDTH-1:0] text_out,
+    output reg text_out_valid,
+    output reg done
+);
+
+    // internal memories (8-bit stored)
+    reg [DATA_WIDTH-1:0] key_matrix [0:BLOCK_SIZE*BLOCK_SIZE-1];
+    reg [DATA_WIDTH-1:0] input_block [0:BLOCK_SIZE-1];
+    reg [DATA_WIDTH-1:0] output_block [0:BLOCK_SIZE-1];
+
+    // FSM states - robust, explicit phases
+    localparam IDLE = 0,
+               WRITE_A = 1,
+               WRITE_B = 2,
+               WAIT_BEFORE_START = 3,
+               MVMUL = 4,
+               OUTPUT = 5;
+    reg [2:0] state;
+
+    // write counters
+    reg [3:0] a_wr_cnt;                       // 0..(BLOCK_SIZE*BLOCK_SIZE-1)
+    reg [$clog2(BLOCK_SIZE)-1:0] b_wr_cnt;    // 0..(BLOCK_SIZE-1)
+
+    // matrix_multiplier interface (wider internal width)
+    reg mm_start, mm_a_wen, mm_b_wen;
+    reg [3:0] mm_a_addr;
+    reg [$clog2(BLOCK_SIZE)-1:0] mm_b_addr;
+    reg [MM_DWIDTH-1:0] mm_a_data;
+    reg [MM_DWIDTH-1:0] mm_b_data;
+    wire [MM_DWIDTH-1:0] mm_c_data;
+    wire mm_c_valid, mm_done;
+
+    // instantiate your matrix_multiplier with DATA_WIDTH = MM_DWIDTH
+    matrix_multiplier #(
+        .M1(BLOCK_SIZE), .N1(BLOCK_SIZE), .N2(1), .DATA_WIDTH(MM_DWIDTH)
+    ) mm_inst (
+        .clk(clk), .rst(rst), .start(mm_start),
+        .mat_a_data(mm_a_data), .mat_a_addr(mm_a_addr), .mat_a_wen(mm_a_wen),
+        .mat_b_data(mm_b_data), .mat_b_addr(mm_b_addr), .mat_b_wen(mm_b_wen),
+        .mat_c_data(mm_c_data), .mat_c_valid(mm_c_valid), .done(mm_done)
+    );
+
+    // collection counters
+    reg [$clog2(BLOCK_SIZE)-1:0] recv_cnt; // how many mm_c_valid captured
+    reg [$clog2(BLOCK_SIZE)-1:0] out_idx;  // used during OUTPUT stage
+
+    // helpers
+    function [7:0] char_to_num;
+        input [7:0] ch;
+        begin
+            if (ch >= "A" && ch <= "Z")      char_to_num = ch - "A";
+            else if (ch >= "a" && ch <= "z") char_to_num = ch - "a";
+            else                             char_to_num = 0;
+        end
+    endfunction
+
+    function [7:0] num_to_char;
+        input [7:0] num;
+        begin
+            num_to_char = (num % 26) + "A";
+        end
+    endfunction
+
+    function [7:0] mod26;
+        input [15:0] value;
+        begin
+            mod26 = value % 26;
+        end
+    endfunction
+
+    // write interfaces from testbench (unchanged)
+    always @(posedge clk) begin
+        if (key_wen)
+            key_matrix[key_addr] <= key_data;
+        if (text_in_wen)
+            input_block[text_in_addr] <= char_to_num(text_in);
+    end
+
+    // main FSM
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            state <= IDLE;
+            a_wr_cnt <= 0;
+            b_wr_cnt <= 0;
+            mm_start <= 0;
+            mm_a_wen <= 0;
+            mm_b_wen <= 0;
+            recv_cnt <= 0;
+            out_idx <= 0;
+            text_out_valid <= 0;
+            done <= 0;
+        end else begin
+            // default: deassert one-cycle control pulses unless set in state
+            mm_start <= 0;
+            mm_a_wen <= 0;
+            mm_b_wen <= 0;
+            text_out_valid <= 0;
+
+            case (state)
+                IDLE: begin
+                    text_out_valid <= 0;
+                    done <= 0;
+                    recv_cnt <= 0;
+                    out_idx <= 0;
+                    if (start) begin
+                        a_wr_cnt <= 0;
+                        b_wr_cnt <= 0;
+                        state <= WRITE_A;
+                    end
+                end
+
+                // write full key matrix A into multiplier memory (one word per cycle)
+                WRITE_A: begin
+                    mm_a_wen <= 1;
+                    mm_a_addr <= a_wr_cnt;
+                    // zero-extend 8-bit key into MM_DWIDTH
+                    mm_a_data <= { {(MM_DWIDTH-DATA_WIDTH){1'b0}}, key_matrix[a_wr_cnt] };
+                    if (a_wr_cnt == (BLOCK_SIZE*BLOCK_SIZE - 1)) begin
+                        // finished writing A
+                        a_wr_cnt <= 0;
+                        state <= WRITE_B;
+                    end else begin
+                        a_wr_cnt <= a_wr_cnt + 1;
+                    end
+                end
+
+                // write input vector b (BLOCK_SIZE words)
+                WRITE_B: begin
+                    mm_b_wen <= 1;
+                    mm_b_addr <= b_wr_cnt;
+                    mm_b_data <= { {(MM_DWIDTH-DATA_WIDTH){1'b0}}, input_block[b_wr_cnt] };
+                    if (b_wr_cnt == (BLOCK_SIZE - 1)) begin
+                        b_wr_cnt <= 0;
+                        state <= WAIT_BEFORE_START;
+                    end else begin
+                        b_wr_cnt <= b_wr_cnt + 1;
+                    end
+                end
+
+                // one-cycle wait to ensure writes settle inside the multiplier before pulsing start
+                WAIT_BEFORE_START: begin
+                    // next cycle pulse start
+                    mm_start <= 1;
+                    recv_cnt <= 0;
+                    state <= MVMUL;
+                end
+
+                // collect multiplier outputs; expect exactly BLOCK_SIZE results
+                MVMUL: begin
+                    if (mm_c_valid) begin
+                        output_block[recv_cnt] <= num_to_char(mod26(mm_c_data));
+                        recv_cnt <= recv_cnt + 1;
+                    end
+
+                    if (mm_done) begin
+                        out_idx <= 0;
+                        state <= OUTPUT;
+                    end
+                end
+
+                OUTPUT: begin
+                    text_out <= output_block[out_idx];
+                    text_out_valid <= 1;
+                    if (out_idx == (BLOCK_SIZE - 1)) begin
+                        done <= 1;
+                        state <= IDLE;
+                    end else begin
+                        out_idx <= out_idx + 1;
+                    end
+                end
+
+                default: state <= IDLE;
+            endcase
+        end
+    end
+
+endmodule
+

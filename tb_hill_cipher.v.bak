@@ -1,0 +1,144 @@
+`timescale 1ns/1ps
+
+module tb_hill_cipher;
+
+    //=================================================================
+    // CUSTOMIZE YOUR TEST HERE
+    //=================================================================
+    parameter BLOCK_SIZE = 4;  // Change to 2, 3, 4, 5, etc.
+    parameter DATA_WIDTH = 8;
+    parameter CLK_PERIOD = 10;
+    
+    // Define your plaintext here
+    reg [8*BLOCK_SIZE-1:0] plaintext = "HELP";  // Must have BLOCK_SIZE characters
+    
+    // Define your key matrix values here
+    integer key_values [0:BLOCK_SIZE*BLOCK_SIZE-1];
+    //=================================================================
+    
+    // Calculate required address widths
+    localparam KEY_ADDR_WIDTH = BLOCK_SIZE*BLOCK_SIZE > 16 ? 5 :
+                               BLOCK_SIZE*BLOCK_SIZE > 8 ? 4 :
+                               BLOCK_SIZE*BLOCK_SIZE > 4 ? 3 :
+                               BLOCK_SIZE*BLOCK_SIZE > 2 ? 2 : 1;
+                               
+    localparam TEXT_ADDR_WIDTH = BLOCK_SIZE > 16 ? 5 :
+                                BLOCK_SIZE > 8 ? 4 :
+                                BLOCK_SIZE > 4 ? 3 :
+                                BLOCK_SIZE > 2 ? 2 : 1;
+    
+    reg clk, rst, start, mode;
+    reg [DATA_WIDTH-1:0] key_data, text_in;
+    reg [KEY_ADDR_WIDTH-1:0] key_addr;
+    reg [TEXT_ADDR_WIDTH-1:0] text_in_addr;
+    reg key_wen, text_in_wen;
+    
+    wire [DATA_WIDTH-1:0] text_out;
+    wire text_out_valid;
+    wire done;
+    
+    hill_cipher_crypto #(
+        .BLOCK_SIZE(BLOCK_SIZE),
+        .DATA_WIDTH(DATA_WIDTH)
+    ) dut (
+        .clk(clk),
+        .rst(rst),
+        .start(start),
+        .mode(mode),
+        .key_data(key_data),
+        .key_addr(key_addr),
+        .key_wen(key_wen),
+        .text_in(text_in),
+        .text_in_addr(text_in_addr),
+        .text_in_wen(text_in_wen),
+        .text_out(text_out),
+        .text_out_valid(text_out_valid),
+        .done(done)
+    );
+    
+    initial clk = 0;
+    always #(CLK_PERIOD/2) clk = ~clk;
+    
+    reg [DATA_WIDTH-1:0] output_text [0:BLOCK_SIZE-1];
+    integer output_idx;
+    
+    always @(posedge clk) begin
+        if (text_out_valid) begin
+            output_text[output_idx] <= text_out;
+            output_idx <= output_idx + 1;
+        end
+    end
+    
+    integer i;
+    initial begin
+        // Initialize the key_values array here
+        if (BLOCK_SIZE == 4) begin
+            key_values[0]  = 6;  key_values[1]  = 24; key_values[2]  = 1;  key_values[3]  = 13;
+            key_values[4]  = 16; key_values[5]  = 10; key_values[6]  = 20; key_values[7]  = 17;
+            key_values[8]  = 15; key_values[9]  = 3;  key_values[10] = 5;  key_values[11] = 2;
+            key_values[12] = 7;  key_values[13] = 8;  key_values[14] = 11; key_values[15] = 4;
+        end else begin
+            $display("ERROR: Testbench key_values are not defined for BLOCK_SIZE = %0d", BLOCK_SIZE);
+            $display("Please update the initial block in tb_hill_cipher.v to add keys.");
+            $finish;
+        end
+
+        $dumpfile("hill_cipher.vcd");
+        $dumpvars(0, tb_hill_cipher);
+        
+        rst = 1;
+        start = 0;
+        key_wen = 0;
+        text_in_wen = 0;
+        mode = 0;
+        output_idx = 0;
+        
+        #(CLK_PERIOD*2);
+        rst = 0;
+        
+        $display("\n=== Hill Cipher Cryptography Test ===");
+        $display("Block size: %0d characters\n", BLOCK_SIZE);
+        
+        // Load key matrix
+        $display("Loading encryption key matrix...");
+        key_wen = 1;
+        for (i = 0; i < BLOCK_SIZE*BLOCK_SIZE; i = i + 1) begin
+            key_addr = i;
+            key_data = key_values[i];
+            @(posedge clk);
+        end
+        key_wen = 0;
+        
+        // Load plaintext
+        $display("Loading plaintext: %s", plaintext);
+        text_in_wen = 1;
+        for (i = 0; i < BLOCK_SIZE; i = i + 1) begin
+            text_in_addr = i;
+            text_in = (plaintext >> (8*(BLOCK_SIZE-1-i))) & 8'hFF;
+            @(posedge clk);
+        end
+        text_in_wen = 0;
+        
+        #(CLK_PERIOD*2);
+        $display("\nStarting encryption...");
+        start = 1;
+        @(posedge clk);
+        start = 0;
+        
+        wait(done);
+        
+        #(CLK_PERIOD*2);
+        
+        $display("\n--- Encryption Result ---");
+        $write("Ciphertext: ");
+        for (i = 0; i < BLOCK_SIZE; i = i + 1) begin
+            $write("%c", output_text[i]);
+        end
+        $display("\n");
+        
+        $display("=== Hill Cipher Test Complete ===");
+        #(CLK_PERIOD*10);
+        $finish;
+    end
+
+endmodule
