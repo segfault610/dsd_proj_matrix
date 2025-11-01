@@ -1,4 +1,3 @@
-`timescale 1ns/1ps
 
 // ----------------------------------------------------------
 // Hill Cipher Encryption using matrix_multiplier

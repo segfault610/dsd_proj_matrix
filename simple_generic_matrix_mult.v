@@ -1,11 +1,12 @@
-//===========================================================
-// FIXED Generic M×N × N×P Matrix Multiplier
-//===========================================================
+
+// =========================================
+// SIMPLE GENERIC MATRIX MULTIPLIER (DUT)
+// =========================================
 module simple_generic_matrix_mult #(
-    parameter M = 3,
-    parameter N = 3,
-    parameter P = 3,
-    parameter DATA_WIDTH = 8
+    parameter integer M = 3,
+    parameter integer N = 3,
+    parameter integer P = 3,
+    parameter integer DATA_WIDTH = 8
 )(
     input  wire clk,
     input  wire rst,
@@ -26,19 +27,16 @@ module simple_generic_matrix_mult #(
 
     reg signed [DATA_WIDTH-1:0] A [0:M*N-1];
     reg signed [DATA_WIDTH-1:0] B [0:N*P-1];
-
     reg [$clog2(M):0] row;
     reg [$clog2(P):0] col;
     reg [$clog2(N):0] k_count;
-
     reg signed [2*DATA_WIDTH + $clog2(N):0] accumulator;
 
-    localparam IDLE    = 0;
-    localparam COMPUTE = 1;
-    localparam ACC_FINAL = 2;
-    localparam OUTPUT  = 3;
-    localparam DONE_ST = 4;
-
+    localparam IDLE     = 0;
+    localparam COMPUTE  = 1;
+    localparam ACC_FINAL= 2;
+    localparam OUTPUT   = 3;
+    localparam DONE_ST  = 4;
     reg [2:0] state;
 
     wire signed [2*DATA_WIDTH-1:0] product;
@@ -60,40 +58,32 @@ module simple_generic_matrix_mult #(
             done <= 0;
             c_out <= 0;
         end else begin
+            c_valid <= 0;
             case (state)
                 IDLE: begin
-                    c_valid <= 0;
                     done <= 0;
                     if (start) begin
-                        row <= 0; col <= 0; k_count <= 0;
+                        row <= 0;
+                        col <= 0;
+                        k_count <= 0;
                         accumulator <= 0;
                         state <= COMPUTE;
                     end
                 end
-
                 COMPUTE: begin
                     accumulator <= accumulator + product;
-                    if (k_count == N-1)
-                        state <= ACC_FINAL;
-                    else
-                        k_count <= k_count + 1;
+                    if (k_count == N-1) state <= ACC_FINAL;
+                    else k_count <= k_count + 1;
                 end
-
-                ACC_FINAL: begin
-                    // let the last MAC settle
-                    state <= OUTPUT;
-                end
-
+                ACC_FINAL: state <= OUTPUT;
                 OUTPUT: begin
                     c_out <= accumulator[2*DATA_WIDTH-1:0];
                     c_valid <= 1;
                     accumulator <= 0;
                     k_count <= 0;
-
                     if (col == P-1) begin
                         col <= 0;
-                        if (row == M-1)
-                            state <= DONE_ST;
+                        if (row == M-1) state <= DONE_ST;
                         else begin
                             row <= row + 1;
                             state <= COMPUTE;
@@ -103,15 +93,12 @@ module simple_generic_matrix_mult #(
                         state <= COMPUTE;
                     end
                 end
-
                 DONE_ST: begin
-                    c_valid <= 0;
                     done <= 1;
-                    if (!start)
-                        state <= IDLE;
+                    if (!start) state <= IDLE;
                 end
+                default: state <= IDLE;
             endcase
         end
     end
 endmodule
-

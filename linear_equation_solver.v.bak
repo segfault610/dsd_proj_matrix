@@ -3,7 +3,7 @@
 module linear_equation_solver_3x3 #(
     parameter DATA_WIDTH = 16,
     parameter MAX_ITER = 40,
-    parameter FRAC_BITS = 10            // Q8.8 fixed-point
+    parameter FRAC_BITS = 8            // Q8.8 fixed-point
 )(
     input wire clk,
     input wire rst,

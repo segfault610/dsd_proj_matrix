@@ -1,63 +1,53 @@
-//===========================================================
-// CORRECTED Generic M×N × N×P Matrix Multiplier
-// Fixed accumulator width and overflow issues
-//===========================================================
+`timescale 1ns/1ps
 
+// =========================================
+// SIMPLE GENERIC MATRIX MULTIPLIER (DUT)
+// =========================================
 module simple_generic_matrix_mult #(
-    parameter M = 3,           // Rows in A
-    parameter N = 3,           // Cols in A, Rows in B
-    parameter P = 3,           // Cols in B
-    parameter DATA_WIDTH = 8
+    parameter integer M = 3,
+    parameter integer N = 3,
+    parameter integer P = 3,
+    parameter integer DATA_WIDTH = 8
 )(
-    input wire clk,
-    input wire rst,
-    input wire start,
-    
-    // Memory interface
-    input wire [DATA_WIDTH-1:0] a_in,
-    input wire [$clog2(M*N)-1:0] a_addr,
-    input wire a_wen,
-    
-    input wire [DATA_WIDTH-1:0] b_in,
-    input wire [$clog2(N*P)-1:0] b_addr,
-    input wire b_wen,
-    
-    // Output interface
-    output reg [2*DATA_WIDTH-1:0] c_out,  // MUST be double width!
+    input  wire clk,
+    input  wire rst,
+    input  wire start,
+
+    input  wire signed [DATA_WIDTH-1:0] a_in,
+    input  wire [$clog2(M*N)-1:0] a_addr,
+    input  wire a_wen,
+
+    input  wire signed [DATA_WIDTH-1:0] b_in,
+    input  wire [$clog2(N*P)-1:0] b_addr,
+    input  wire b_wen,
+
+    output reg [2*DATA_WIDTH-1:0] c_out,
     output reg c_valid,
     output reg done
 );
 
-    // Internal memories
-    reg [DATA_WIDTH-1:0] A [0:M*N-1];
-    reg [DATA_WIDTH-1:0] B [0:N*P-1];
-    
-    // Loop counters - MUST be sized properly!
-    reg [$clog2(M):0] row;       // +1 bit for comparison
-    reg [$clog2(P):0] col;       // +1 bit for comparison
-    reg [$clog2(N):0] k_count;   // +1 bit for comparison
-    
-    // Accumulator - MUST be wide enough for sum of products
-    // Worst case: N products of (2*DATA_WIDTH) bits
-    reg [2*DATA_WIDTH + $clog2(N):0] accumulator;
-    
-    // States
-    localparam IDLE    = 0;
-    localparam COMPUTE = 1;
-    localparam OUTPUT  = 2;
-    localparam DONE_ST = 3;
-    
-    reg [1:0] state;
-    
-    // Write to memories
+    reg signed [DATA_WIDTH-1:0] A [0:M*N-1];
+    reg signed [DATA_WIDTH-1:0] B [0:N*P-1];
+    reg [$clog2(M):0] row;
+    reg [$clog2(P):0] col;
+    reg [$clog2(N):0] k_count;
+    reg signed [2*DATA_WIDTH + $clog2(N):0] accumulator;
+
+    localparam IDLE     = 0;
+    localparam COMPUTE  = 1;
+    localparam ACC_FINAL= 2;
+    localparam OUTPUT   = 3;
+    localparam DONE_ST  = 4;
+    reg [2:0] state;
+
+    wire signed [2*DATA_WIDTH-1:0] product;
+    assign product = $signed(A[row*N + k_count]) * $signed(B[k_count*P + col]);
+
     always @(posedge clk) begin
-        if (a_wen)
-            A[a_addr] <= a_in;
-        if (b_wen)
-            B[b_addr] <= b_in;
+        if (a_wen) A[a_addr] <= a_in;
+        if (b_wen) B[b_addr] <= b_in;
     end
-    
-    // Main FSM
+
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             state <= IDLE;
@@ -69,9 +59,9 @@ module simple_generic_matrix_mult #(
             done <= 0;
             c_out <= 0;
         end else begin
+            c_valid <= 0;
             case (state)
                 IDLE: begin
-                    c_valid <= 0;
                     done <= 0;
                     if (start) begin
                         row <= 0;
@@ -81,33 +71,21 @@ module simple_generic_matrix_mult #(
                         state <= COMPUTE;
                     end
                 end
-                
                 COMPUTE: begin
-                    // Perform multiply-accumulate
-                    // CRITICAL: Cast to wide enough type before multiply
-                    accumulator <= accumulator + 
-                        ($signed(A[row*N + k_count]) * $signed(B[k_count*P + col]));
-                    
-                    if (k_count == N-1) begin
-                        state <= OUTPUT;
-                    end else begin
-                        k_count <= k_count + 1;
-                    end
+                    accumulator <= accumulator + product;
+                    if (k_count == N-1) state <= ACC_FINAL;
+                    else k_count <= k_count + 1;
                 end
-                
+                ACC_FINAL: state <= OUTPUT;
                 OUTPUT: begin
-                    // Output the result (truncate back to 2*DATA_WIDTH)
                     c_out <= accumulator[2*DATA_WIDTH-1:0];
                     c_valid <= 1;
                     accumulator <= 0;
                     k_count <= 0;
-                    
-                    // Move to next position
                     if (col == P-1) begin
                         col <= 0;
-                        if (row == M-1) begin
-                            state <= DONE_ST;
-                        end else begin
+                        if (row == M-1) state <= DONE_ST;
+                        else begin
                             row <= row + 1;
                             state <= COMPUTE;
                         end
@@ -116,16 +94,12 @@ module simple_generic_matrix_mult #(
                         state <= COMPUTE;
                     end
                 end
-                
                 DONE_ST: begin
-                    c_valid <= 0;
                     done <= 1;
-                    if (!start)
-                        state <= IDLE;
+                    if (!start) state <= IDLE;
                 end
+                default: state <= IDLE;
             endcase
         end
     end
-
 endmodule
-

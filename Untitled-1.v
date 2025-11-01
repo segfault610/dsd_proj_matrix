@@ -1,4 +1,3 @@
-`timescale 1ns/1ps
 
 module tb_simple_generic_matrix_mult;
     // Change these parameters for different matrix orders!

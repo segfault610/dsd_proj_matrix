@@ -39,7 +39,7 @@ module tb_matrix_multiplier;
         .done(done)
     );
 
-    // Arrays to hold your input and output matrices
+    // Arrays to hold input and output matrices
     reg [DATA_WIDTH-1:0] matrix_a [0:M1*N1-1];
     reg [DATA_WIDTH-1:0] matrix_b [0:N1*N2-1];
     reg [DATA_WIDTH-1:0] result_matrix [0:M1*N2-1];
