@@ -1,27 +1,79 @@
-// Testbench: Simple AND gate classifier
-module perceptron_tb;
-    
-    // Train a perceptron to learn AND function
-    // Inputs: [x1, x2, bias=1, unused]
-    // Weights: Pre-trained for AND gate
-    
+`timescale 1ns / 1ps
+module tb_perceptron;
+    parameter INPUT_SIZE = 4;
+    parameter OUTPUT_SIZE = 2;
+    parameter DATA_WIDTH = 8;
+    parameter CLK_PERIOD = 10;
+
+    reg clk, rst;
+    reg start;
+    // arrays for inputs and weights
+    reg signed [DATA_WIDTH-1:0] input_vec [0:INPUT_SIZE-1];
+    reg signed [DATA_WIDTH-1:0] weights [0:INPUT_SIZE*OUTPUT_SIZE-1];
+    wire signed [2*DATA_WIDTH-1:0] output_vec [0:OUTPUT_SIZE-1];
+    wire done;
+
+    integer i;
+
+    perceptron #(INPUT_SIZE, OUTPUT_SIZE, DATA_WIDTH) dut (
+        .clk(clk), .rst(rst), .start(start),
+        .input_vec(input_vec),
+        .weights(weights),
+        .output_vec(output_vec),
+        .done(done)
+    );
+
     initial begin
-        $display("Perceptron AND Gate Test");
-        
-        // Test 1: Input [0, 0] ? Expected Output: 0 (class 0)
-        input_vec = 8'd0;
-        input_vec = 8'd0;
-        input_vec = 8'd1;  // bias
-        input_vec = 8'd0;
-        start = 1;
-        @(posedge clk); start = 0;
-        wait(done);
-        $display("AND(0,0) = %d", (output_vec > output_vec) ? 0 : 1);
-        
-        // Test 2: Input [0, 1] ? Expected: 0
-        // Test 3: Input [1, 0] ? Expected: 0
-        // Test 4: Input [1, 1] ? Expected: 1
+        clk = 0;
+        forever #(CLK_PERIOD/2) clk = ~clk;
     end
+
+    // simple AND perceptron weights (example):
+    // We use a single-output perceptron at output_vec[0] and leave output_vec[1] unused (zero weights).
+    initial begin
+        $dumpfile("tb_perceptron.vcd");
+        $dumpvars(0, tb_perceptron);
+
+        // reset
+        rst = 1; start = 0;
+        # (CLK_PERIOD * 2);
+        rst = 0;
+        #CLK_PERIOD;
+
+        // initialize weights for AND: w1=1, w2=1, bias = -1 (threshold at 2)
+        // flattened: output0 weights: [w0, w1, w2, w3]
+        weights[0] = 8'sd1;   // w0 (x1)
+        weights[1] = 8'sd1;   // w1 (x2)
+        weights[2] = -8'sd1;  // w2 (bias as -1)
+        weights[3] = 8'sd0;   // w3 (unused)
+        // second output not used
+        for (i = INPUT_SIZE*1; i < INPUT_SIZE*OUTPUT_SIZE; i = i + 1)
+            weights[i] = 0;
+
+        // Test patterns
+        test_pattern(0, 0);
+        test_pattern(0, 1);
+        test_pattern(1, 0);
+        test_pattern(1, 1);
+
+        # (CLK_PERIOD * 10);
+        $finish;
+    end
+
+    task test_pattern(input bit x1, input bit x2);
+        begin
+            input_vec[0] = x1;
+            input_vec[1] = x2;
+            input_vec[2] = 1; // bias = 1
+            input_vec[3] = 0; // unused
+
+            start = 1; @(posedge clk); start = 0;
+            wait(done);
+            #1;
+            // interpret output_vec[0] > 0 as class 1, else class 0
+            $display("AND(%0d,%0d) -> raw=%0d => class=%0d", x1, x2, output_vec[0], (output_vec[0] > 0) ? 1 : 0);
+        end
+    endtask
 
 endmodule
 

@@ -4,29 +4,21 @@
 # Compile of tb_hill_cipher.v was successful.
 # Compile of simple_generic_matrix_mult.v was successful.
 # Compile of tb_simple_generic_matrix_mult.v was successful.
-# Compile of graphics_transform.v failed with 1 errors.
-# Compile of tb_graphics_transform.v failed with 7 errors.
+# Compile of graphics_transform.v was successful.
+# Compile of tb_graphics_transform.v was successful.
 # Compile of neural_layer.v was successful.
-# Compile of image_filter.v failed with 7 errors.
-# Compile of matrix_transform.v failed with 81 errors.
-# Compile of tb_applications.v was successful.
-# 12 compiles, 4 failed with 96 errors.
-# Compile of tb_linear_equation_solver.v was successful.
-# Compile of linear_equation_solver.v was successful.
-# Compile of hill_cipher_crypto.v was successful.
-# Compile of tb_hill_cipher.v was successful.
-# Compile of simple_generic_matrix_mult.v was successful.
-# Compile of tb_simple_generic_matrix_mult.v was successful.
-# Compile of graphics_transform.v failed with 1 errors.
-# Compile of tb_graphics_transform.v failed with 7 errors.
-# Compile of neural_layer.v was successful.
-# Compile of image_filter.v failed with 54 errors.
-# Compile of matrix_transform.v failed with 81 errors.
+# Compile of image_filter.v was successful.
+# Compile of matrix_transform.v was successful.
 # Compile of tb_neural_layer.v was successful.
-# Compile of tb_image_filter.v failed with 5 errors.
+# Compile of tb_image_filter.v was successful.
 # Compile of tb_matrix_transform.v was successful.
-# 14 compiles, 5 failed with 148 errors.
-# Compile of tb_image_filter.v failed with 3 errors.
+# Compile of perceptron.v failed with 3 errors.
+# Compile of tb_perceptron.v failed with 4 errors.
+# Compile of fir_filter.v failed with 1 errors.
+# Compile of tb_fir_filter.v failed with 5 errors.
+# Compile of matrix_accelerator_top.v was successful.
+# Compile of tb_system.v failed with 6 errors.
+# 20 compiles, 5 failed with 19 errors.
 # Compile of tb_linear_equation_solver.v was successful.
 # Compile of linear_equation_solver.v was successful.
 # Compile of hill_cipher_crypto.v was successful.
@@ -41,15 +33,172 @@
 # Compile of tb_neural_layer.v was successful.
 # Compile of tb_image_filter.v was successful.
 # Compile of tb_matrix_transform.v was successful.
-# 14 compiles, 0 failed with no errors.
-vsim -gui work.tb_neural_layer
-# vsim -gui work.tb_neural_layer 
-# Start time: 11:08:50 on Nov 02,2025
+# Compile of perceptron.v failed with 4 errors.
+# Compile of tb_perceptron.v failed with 1 errors.
+# Compile of fir_filter.v failed with 3 errors.
+# Compile of tb_fir_filter.v failed with 3 errors.
+# Compile of matrix_accelerator_top.v was successful.
+# Compile of tb_system.v was successful.
+# 20 compiles, 4 failed with 11 errors.
+# Compile of tb_linear_equation_solver.v was successful.
+# Compile of linear_equation_solver.v was successful.
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v was successful.
+# Compile of graphics_transform.v was successful.
+# Compile of tb_graphics_transform.v was successful.
+# Compile of neural_layer.v was successful.
+# Compile of image_filter.v was successful.
+# Compile of matrix_transform.v was successful.
+# Compile of tb_neural_layer.v was successful.
+# Compile of tb_image_filter.v was successful.
+# Compile of tb_matrix_transform.v was successful.
+# Compile of perceptron.v failed with 4 errors.
+# Compile of tb_perceptron.v failed with 1 errors.
+# Compile of fir_filter.v failed with 3 errors.
+# Compile of tb_fir_filter.v failed with 3 errors.
+# Compile of matrix_accelerator_top.v was successful.
+# Compile of tb_system.v was successful.
+# 20 compiles, 4 failed with 11 errors.
+# Compile of tb_linear_equation_solver.v was successful.
+# Compile of linear_equation_solver.v was successful.
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v was successful.
+# Compile of graphics_transform.v was successful.
+# Compile of tb_graphics_transform.v was successful.
+# Compile of neural_layer.v was successful.
+# Compile of image_filter.v was successful.
+# Compile of matrix_transform.v was successful.
+# Compile of tb_neural_layer.v was successful.
+# Compile of tb_image_filter.v was successful.
+# Compile of tb_matrix_transform.v was successful.
+# Compile of matrix_accelerator_top.v was successful.
+# Compile of tb_system.v was successful.
+# 16 compiles, 0 failed with no errors.
+vsim work.tb_system
+# vsim work.tb_system 
+# Start time: 11:45:41 on Nov 02,2025
+# Loading work.tb_system
+# Loading work.matrix_accelerator_top
+# ** Error: (vsim-3033) Instantiation of 'matrix_mult_core' failed. The design unit was not found.
+#    Time: 0 ps  Iteration: 0  Instance: /tb_system/top File: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_accelerator_top.v Line: 35
+#         Searched libraries:
+#             C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/work
+# Loading work.neural_layer
+# Loading work.image_filter
+# Loading work.matrix_transform
+# Error loading design
+# End time: 11:45:42 on Nov 02,2025, Elapsed time: 0:00:01
+# Errors: 1, Warnings: 18
+vsim work.tb_matrix_transform
+# vsim work.tb_matrix_transform 
+# Start time: 11:46:42 on Nov 02,2025
+# Loading work.tb_matrix_transform
+# Loading work.matrix_transform
+# ** Error (suppressible): (vsim-3389) Port 'matrix_result' not found in the connected module (9th connection).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_matrix_transform/dut File: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_matrix_transform.v Line: 25
+# ** Error (suppressible): (vsim-3389) Port 'matrix_valid' not found in the connected module (10th connection).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_matrix_transform/dut File: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_matrix_transform.v Line: 25
+# Error loading design
+# End time: 11:46:43 on Nov 02,2025, Elapsed time: 0:00:01
+# Errors: 2, Warnings: 1
+run -all
+# No Design Loaded!
+vsim work.tb_simple_generic_matrix_mult
+# vsim work.tb_simple_generic_matrix_mult 
+# Start time: 11:47:24 on Nov 02,2025
+# Loading work.tb_simple_generic_matrix_mult
+# Loading work.simple_generic_matrix_mult
+run -all
+# 
+# Matrix A (2x3):
+#    1    2    3 
+#    4    5    6 
+# 
+# Matrix B (3x4):
+#    1    0   -1    2 
+#   -2    3    0    1 
+#    2    1    1   -1 
+# 
+# Expected Result C (2x4):
+#      3      9      2      1 
+#      6     21      2      7 
+# 
+# DUT Result C (2x4) (captured 8 values):
+# 
+#      3      9      2      1 
+#      6     21      2      7 
+# 
+# >>> TEST PASS: All 8 outputs match expected results.
+# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v(173)
+#    Time: 705 ns  Iteration: 1  Instance: /tb_simple_generic_matrix_mult
+# 1
+# Break in Module tb_simple_generic_matrix_mult at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v line 173
+quit -sim
+# End time: 11:47:47 on Nov 02,2025, Elapsed time: 0:00:23
+# Errors: 0, Warnings: 1
+vsim work.tb_neural_layer
+# vsim work.tb_neural_layer 
+# Start time: 11:48:14 on Nov 02,2025
 # Loading work.tb_neural_layer
 # Loading work.neural_layer
+run -all
+# 
+# ========== TEST 1: ReLU - Positive Number ==========
+# ? FAIL: Input +80 ? Output x (Expected 80)
+# 
+# ========== TEST 2: ReLU - Negative Number ==========
+# ? FAIL: Input -80 ? Output x (Expected 0)
+# 
+# ========== TEST 3: Linear Activation ==========
+# ? FAIL: Linear: Input -128 ? Output      x (Expected -128)
+# 
+# ========== ALL TESTS COMPLETED ==========
+# 
+# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_neural_layer.v(143)
+#    Time: 335 ns  Iteration: 0  Instance: /tb_neural_layer
+# 1
+# Break in Module tb_neural_layer at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_neural_layer.v line 143
 quit -sim
-# End time: 11:09:27 on Nov 02,2025, Elapsed time: 0:00:37
-# Errors: 0, Warnings: 17
+# End time: 11:48:53 on Nov 02,2025, Elapsed time: 0:00:39
+# Errors: 0, Warnings: 1
+# Compile of tb_linear_equation_solver.v was successful.
+# Compile of linear_equation_solver.v was successful.
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v was successful.
+# Compile of graphics_transform.v was successful.
+# Compile of tb_graphics_transform.v was successful.
+# Compile of neural_layer.v failed with 5 errors.
+# Compile of image_filter.v was successful.
+# Compile of matrix_transform.v was successful.
+# Compile of tb_neural_layer.v was successful.
+# Compile of tb_image_filter.v was successful.
+# Compile of tb_matrix_transform.v was successful.
+# Compile of matrix_accelerator_top.v was successful.
+# Compile of tb_system.v was successful.
+# 16 compiles, 1 failed with 5 errors.
+# Compile of tb_linear_equation_solver.v was successful.
+# Compile of linear_equation_solver.v was successful.
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v was successful.
+# Compile of graphics_transform.v was successful.
+# Compile of tb_graphics_transform.v was successful.
+# Compile of neural_layer.v failed with 5 errors.
+# Compile of image_filter.v was successful.
+# Compile of matrix_transform.v was successful.
+# Compile of tb_neural_layer.v was successful.
+# Compile of tb_image_filter.v was successful.
+# Compile of tb_matrix_transform.v was successful.
+# Compile of matrix_accelerator_top.v was successful.
+# Compile of tb_system.v was successful.
+# 16 compiles, 1 failed with 5 errors.
 # Compile of tb_linear_equation_solver.v was successful.
 # Compile of linear_equation_solver.v was successful.
 # Compile of hill_cipher_crypto.v was successful.
@@ -64,27 +213,59 @@ quit -sim
 # Compile of tb_neural_layer.v was successful.
 # Compile of tb_image_filter.v was successful.
 # Compile of tb_matrix_transform.v was successful.
-# Compile of perceptron.v failed with 3 errors.
-# Compile of tb_perceptron.v failed with 4 errors.
-# Compile of fir_filter.v failed with 1 errors.
-# Compile of tb_fir_filter.v failed with 5 errors.
-# 18 compiles, 4 failed with 13 errors.
-# Compile of tb_linear_equation_solver.v was successful.
-# Compile of linear_equation_solver.v was successful.
-# Compile of hill_cipher_crypto.v was successful.
-# Compile of tb_hill_cipher.v was successful.
-# Compile of simple_generic_matrix_mult.v was successful.
-# Compile of tb_simple_generic_matrix_mult.v was successful.
-# Compile of graphics_transform.v was successful.
-# Compile of tb_graphics_transform.v was successful.
-# Compile of neural_layer.v was successful.
-# Compile of image_filter.v was successful.
-# Compile of matrix_transform.v was successful.
-# Compile of tb_neural_layer.v was successful.
-# Compile of tb_image_filter.v was successful.
-# Compile of tb_matrix_transform.v was successful.
-# Compile of perceptron.v failed with 3 errors.
-# Compile of tb_perceptron.v failed with 4 errors.
-# Compile of fir_filter.v failed with 1 errors.
-# Compile of tb_fir_filter.v failed with 5 errors.
-# 18 compiles, 4 failed with 13 errors.
+# Compile of matrix_accelerator_top.v was successful.
+# Compile of tb_system.v was successful.
+# 16 compiles, 0 failed with no errors.
+vsim work.neural_layer
+# vsim work.neural_layer 
+# Start time: 11:53:57 on Nov 02,2025
+# Loading work.neural_layer
+quit -sim
+# End time: 11:54:09 on Nov 02,2025, Elapsed time: 0:00:12
+# Errors: 0, Warnings: 4
+vsim work.tb_neural_layer
+# vsim work.tb_neural_layer 
+# Start time: 11:54:22 on Nov 02,2025
+# Loading work.tb_neural_layer
+# Loading work.neural_layer
+run -all
+# 
+# ========== TEST 1: ReLU - Positive Number ==========
+# [NEURAL] State: IDLE -> WAIT_MAT
+# [NEURAL] Received matrix_result = 0050
+# [NEURAL] State: WAIT_MAT -> PROCESS
+# [NEURAL] Applied activation, bias[0] =    0
+# [NEURAL] State: PROCESS -> OUTPUT
+# [NEURAL] Output: app_result = 0050 (    80)
+# [NEURAL] State: OUTPUT -> IDLE
+# ? PASS: Input +80 ? Output 80 (Expected 80)
+# 
+# ========== TEST 2: ReLU - Negative Number ==========
+# [NEURAL] State: IDLE -> WAIT_MAT
+# [NEURAL] Received matrix_result = ffb0
+# [NEURAL] State: WAIT_MAT -> PROCESS
+# [NEURAL] Applied activation, bias[0] =    0
+# [NEURAL] State: PROCESS -> OUTPUT
+# [NEURAL] Output: app_result = 0000 (     0)
+# [NEURAL] State: OUTPUT -> IDLE
+# ? PASS: Input -80 ? Output 0 (Expected 0)
+# 
+# ========== TEST 3: Linear Activation ==========
+# [NEURAL] State: IDLE -> WAIT_MAT
+# [NEURAL] Received matrix_result = ff80
+# [NEURAL] State: WAIT_MAT -> PROCESS
+# [NEURAL] Applied activation, bias[0] =    0
+# [NEURAL] State: PROCESS -> OUTPUT
+# [NEURAL] Output: app_result = ff80 (  -128)
+# [NEURAL] State: OUTPUT -> IDLE
+# ? PASS: Linear: Input -128 ? Output   -128 (Expected -128)
+# 
+# ========== ALL TESTS COMPLETED ==========
+# 
+# ** Note: $finish    : C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_neural_layer.v(143)
+#    Time: 335 ns  Iteration: 0  Instance: /tb_neural_layer
+# 1
+# Break in Module tb_neural_layer at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_neural_layer.v line 143
+quit -sim
+# End time: 11:55:40 on Nov 02,2025, Elapsed time: 0:01:18
+# Errors: 0, Warnings: 1

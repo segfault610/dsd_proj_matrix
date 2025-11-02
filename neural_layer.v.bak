@@ -1,5 +1,5 @@
 // ============================================================================
-// NEURAL LAYER MODULE - Single Layer Perceptron with ReLU Activation
+// NEURAL LAYER MODULE - FIXED FSM LOGIC
 // ============================================================================
 
 module neural_layer #(
@@ -24,18 +24,25 @@ module neural_layer #(
     output reg app_done
 );
 
+    // Memory for bias values
     reg signed [DATA_WIDTH-1:0] bias_mem [0:M-1];
     
-    localparam [2:0] IDLE           = 3'd0;
-    localparam [2:0] WAIT_MATRIX    = 3'd1;
-    localparam [2:0] ADD_BIAS       = 3'd2;
-    localparam [2:0] APPLY_ACTIVATION = 3'd3;
-    localparam [2:0] OUTPUT_RESULT  = 3'd4;
+    // FSM States - SIMPLIFIED
+    localparam [1:0] IDLE      = 2'd0;
+    localparam [1:0] WAIT_MAT  = 2'd1;
+    localparam [1:0] PROCESS   = 2'd2;
+    localparam [1:0] OUTPUT    = 2'd3;
     
-    reg [2:0] state;
-    reg [2*DATA_WIDTH-1:0] biased_result;
-    reg [2*DATA_WIDTH-1:0] activated_result;
-    reg [$clog2(M):0] neuron_idx;
+    reg [1:0] state;
+    reg [2*DATA_WIDTH-1:0] temp_result;
+    
+    // Initialize bias memory to zero
+    integer i;
+    initial begin
+        for (i = 0; i < M; i = i + 1) begin
+            bias_mem[i] = 0;
+        end
+    end
     
     // ===== BIAS MEMORY WRITE =====
     always @(posedge clk) begin
@@ -49,15 +56,102 @@ module neural_layer #(
     function [2*DATA_WIDTH-1:0] activate_relu;
         input [2*DATA_WIDTH-1:0] x;
         begin
-            if (x[2*DATA_WIDTH-1] == 1'b1)
-                activate_relu = {2*DATA_WIDTH{1'b0}};
+            if (x[2*DATA_WIDTH-1] == 1'b1)  // Check sign bit
+                activate_relu = {2*DATA_WIDTH{1'b0}};  // Return 0 for negative
             else
-                activate_relu = x;
+                activate_relu = x;  // Return x for positive
         end
     endfunction
     
     // Linear: return as-is
     function [2*DATA_WIDTH-1:0] activate_linear;
         input [2*DATA_WIDTH-1:0] x;
-  
+        begin
+            activate_linear = x;
+        end
+    endfunction
+    
+    // Apply activation based on type
+    function [2*DATA_WIDTH-1:0] apply_activation;
+        input [2*DATA_WIDTH-1:0] x;
+        input [1:0] act_type;
+        begin
+            case (act_type)
+                2'b00: apply_activation = activate_relu(x);      // ReLU
+                2'b01: apply_activation = activate_relu(x);      // Also ReLU (fallback)
+                2'b10: apply_activation = activate_linear(x);    // Linear
+                2'b11: apply_activation = activate_linear(x);    // Also Linear (fallback)
+            endcase
+        end
+    endfunction
+    
+    // ===== MAIN FSM =====
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            state <= IDLE;
+            app_result <= 0;
+            app_valid <= 0;
+            app_done <= 0;
+            temp_result <= 0;
+        end
+        else begin
+            // Clear valid flag every cycle
+            app_valid <= 0;
+            
+            case (state)
+                // =========================================================
+                // IDLE: Wait for start signal
+                // =========================================================
+                IDLE: begin
+                    app_done <= 0;
+                    if (start) begin
+                        state <= WAIT_MAT;
+                        $display("[NEURAL] State: IDLE -> WAIT_MAT");
+                    end
+                end
+                
+                // =========================================================
+                // WAIT_MAT: Wait for matrix result
+                // =========================================================
+                WAIT_MAT: begin
+                    if (matrix_valid) begin
+                        temp_result <= matrix_result;  // Store matrix result
+                        state <= PROCESS;
+                        $display("[NEURAL] Received matrix_result = %h", matrix_result);
+                        $display("[NEURAL] State: WAIT_MAT -> PROCESS");
+                    end
+                end
+                
+                // =========================================================
+                // PROCESS: Add bias and apply activation
+                // =========================================================
+                PROCESS: begin
+                    // Add bias (bias_mem for simplicity)
+                    temp_result <= temp_result + $signed(bias_mem);
+                    
+                    // Apply activation function
+                    app_result <= apply_activation(temp_result + $signed(bias_mem), activation_type);
+                    
+                    state <= OUTPUT;
+                    $display("[NEURAL] Applied activation, bias = %d", $signed(bias_mem));
+                    $display("[NEURAL] State: PROCESS -> OUTPUT");
+                end
+                
+                // =========================================================
+                // OUTPUT: Signal completion
+                // =========================================================
+                OUTPUT: begin
+                    app_valid <= 1;
+                    app_done <= 1;
+                    state <= IDLE;
+                    $display("[NEURAL] Output: app_result = %h (%d)", app_result, $signed(app_result));
+                    $display("[NEURAL] State: OUTPUT -> IDLE");
+                end
+                
+                default: state <= IDLE;
+            endcase
+        end
+    end
+
+endmodule
 

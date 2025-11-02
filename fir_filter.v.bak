@@ -1,1 +1,46 @@
+// fir_filter.v
+module fir_filter #(
+    parameter TAPS = 8,
+    parameter DATA_WIDTH = 16
+)(
+    input  wire                          clk,
+    input  wire                          rst,
+    input  wire signed [DATA_WIDTH-1:0]  sample_in,
+    input  wire                          sample_valid,
+    input  wire signed [DATA_WIDTH-1:0]  coeffs [0:TAPS-1],
+    output reg signed [2*DATA_WIDTH-1:0] filtered_out,
+    output reg                           output_valid
+);
+
+    reg signed [DATA_WIDTH-1:0] sample_buffer [0:TAPS-1];
+    integer i;
+
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            for (i = 0; i < TAPS; i = i + 1)
+                sample_buffer[i] <= 0;
+            filtered_out <= 0;
+            output_valid <= 0;
+        end else begin
+            if (sample_valid) begin
+                // shift right (older samples at higher indices)
+                for (i = TAPS-1; i > 0; i = i - 1)
+                    sample_buffer[i] <= sample_buffer[i-1];
+                sample_buffer[0] <= sample_in;
+
+                // compute MAC (wide accumulator)
+                reg signed [2*DATA_WIDTH-1:0] acc;
+                acc = 0;
+                for (i = 0; i < TAPS; i = i + 1)
+                    acc = acc + $signed(sample_buffer[i]) * $signed(coeffs[i]);
+
+                filtered_out <= acc;
+                output_valid <= 1;
+            end else begin
+                output_valid <= 0;
+            end
+        end
+    end
+
+endmodule
 

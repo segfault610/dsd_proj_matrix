@@ -1,0 +1,501 @@
+$date
+	Sun Nov 02 11:54:29 2025
+$end
+$version
+	ModelSim Version 2020.1
+$end
+$timescale
+	1ps
+$end
+
+$scope module tb_neural_layer $end
+$var parameter 32 ! M $end
+$var parameter 32 " N $end
+$var parameter 32 # P $end
+$var parameter 32 $ DATA_WIDTH $end
+$var parameter 32 % CLK_PERIOD $end
+$var reg 1 & clk $end
+$var reg 1 ' rst_n $end
+$var reg 1 ( start $end
+$var reg 2 ) activation_type [1:0] $end
+$var reg 16 * matrix_result [15:0] $end
+$var reg 1 + matrix_valid $end
+$var reg 8 , bias_in [7:0] $end
+$var reg 1 - bias_wen $end
+$var reg 2 . bias_addr [1:0] $end
+$var wire 1 / app_result [15] $end
+$var wire 1 0 app_result [14] $end
+$var wire 1 1 app_result [13] $end
+$var wire 1 2 app_result [12] $end
+$var wire 1 3 app_result [11] $end
+$var wire 1 4 app_result [10] $end
+$var wire 1 5 app_result [9] $end
+$var wire 1 6 app_result [8] $end
+$var wire 1 7 app_result [7] $end
+$var wire 1 8 app_result [6] $end
+$var wire 1 9 app_result [5] $end
+$var wire 1 : app_result [4] $end
+$var wire 1 ; app_result [3] $end
+$var wire 1 < app_result [2] $end
+$var wire 1 = app_result [1] $end
+$var wire 1 > app_result [0] $end
+$var wire 1 ? app_valid $end
+$var wire 1 @ app_done $end
+
+$scope module dut $end
+$var parameter 32 A M $end
+$var parameter 32 B N $end
+$var parameter 32 C P $end
+$var parameter 32 D DATA_WIDTH $end
+$var parameter 2 E IDLE $end
+$var parameter 2 F WAIT_MAT $end
+$var parameter 2 G PROCESS $end
+$var parameter 2 H OUTPUT $end
+$var wire 1 I clk $end
+$var wire 1 J rst_n $end
+$var wire 1 K start $end
+$var wire 1 L activation_type [1] $end
+$var wire 1 M activation_type [0] $end
+$var wire 1 N matrix_result [15] $end
+$var wire 1 O matrix_result [14] $end
+$var wire 1 P matrix_result [13] $end
+$var wire 1 Q matrix_result [12] $end
+$var wire 1 R matrix_result [11] $end
+$var wire 1 S matrix_result [10] $end
+$var wire 1 T matrix_result [9] $end
+$var wire 1 U matrix_result [8] $end
+$var wire 1 V matrix_result [7] $end
+$var wire 1 W matrix_result [6] $end
+$var wire 1 X matrix_result [5] $end
+$var wire 1 Y matrix_result [4] $end
+$var wire 1 Z matrix_result [3] $end
+$var wire 1 [ matrix_result [2] $end
+$var wire 1 \ matrix_result [1] $end
+$var wire 1 ] matrix_result [0] $end
+$var wire 1 ^ matrix_valid $end
+$var wire 1 _ bias_in [7] $end
+$var wire 1 ` bias_in [6] $end
+$var wire 1 a bias_in [5] $end
+$var wire 1 b bias_in [4] $end
+$var wire 1 c bias_in [3] $end
+$var wire 1 d bias_in [2] $end
+$var wire 1 e bias_in [1] $end
+$var wire 1 f bias_in [0] $end
+$var wire 1 g bias_wen $end
+$var wire 1 h bias_addr [1] $end
+$var wire 1 i bias_addr [0] $end
+$var reg 16 j app_result [15:0] $end
+$var reg 1 k app_valid $end
+$var reg 1 l app_done $end
+$var integer 32 m i $end
+$var reg 2 n state [1:0] $end
+$var reg 16 o temp_result [15:0] $end
+$var reg 2 p current_idx [1:0] $end
+
+$scope function activate_relu $end
+$upscope $end
+
+$scope function activate_linear $end
+$upscope $end
+
+$scope function apply_activation $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+0&
+0'
+0(
+b0 )
+bx *
+0+
+bx ,
+0-
+bx .
+b0 j
+0k
+0l
+b0 n
+b0 o
+b0 p
+b11 !
+b11 "
+b11 #
+b1000 $
+b1010 %
+b11 A
+b11 B
+b11 C
+b1000 D
+b0 E
+b1 F
+b10 G
+b11 H
+b11 m
+0>
+0=
+0<
+0;
+0:
+09
+08
+07
+06
+05
+04
+03
+02
+01
+00
+0/
+0?
+0@
+xi
+xh
+0g
+xf
+xe
+xd
+xc
+xb
+xa
+x`
+x_
+0^
+x]
+x\
+x[
+xZ
+xY
+xX
+xW
+xV
+xU
+xT
+xS
+xR
+xQ
+xP
+xO
+xN
+0M
+0L
+0K
+0J
+0I
+$end
+#5000
+1&
+1I
+#10000
+0&
+0I
+#15000
+1&
+1I
+#20000
+1'
+0&
+1J
+0I
+#25000
+1&
+1I
+#30000
+1(
+0&
+1K
+0I
+#35000
+1&
+1I
+b1 n
+#40000
+0(
+0&
+0K
+0I
+#45000
+1&
+1I
+#50000
+b1010000 *
+1+
+0&
+0]
+0\
+0[
+0Z
+1Y
+0X
+1W
+0V
+0U
+0T
+0S
+0R
+0Q
+0P
+0O
+0N
+1^
+0I
+#55000
+1&
+1I
+b1010000 o
+b10 n
+#60000
+0+
+0&
+0^
+0I
+#65000
+1&
+1I
+b1010000 j
+b11 n
+1:
+18
+#70000
+0&
+0I
+#75000
+1&
+1I
+1k
+1l
+b0 n
+1?
+1@
+#80000
+0&
+0I
+#85000
+1&
+1I
+0k
+0l
+0?
+0@
+#90000
+0&
+0I
+#95000
+1&
+1I
+#100000
+0&
+0I
+#105000
+1&
+1I
+#110000
+0&
+0I
+#115000
+1&
+1I
+#120000
+0&
+0I
+#125000
+1&
+1I
+#130000
+0&
+0I
+#135000
+1(
+1&
+1K
+1I
+b1 n
+#140000
+0&
+0I
+#145000
+0(
+1&
+0K
+1I
+#150000
+0&
+0I
+#155000
+b1111111110110000 *
+1+
+1&
+1X
+0W
+1V
+1U
+1T
+1S
+1R
+1Q
+1P
+1O
+1N
+1^
+1I
+b1111111110110000 o
+b10 n
+#160000
+0&
+0I
+#165000
+0+
+1&
+0^
+1I
+b0 j
+b11 n
+0:
+08
+#170000
+0&
+0I
+#175000
+1&
+1I
+1k
+1l
+b0 n
+1?
+1@
+#180000
+0&
+0I
+#185000
+1&
+1I
+0k
+0l
+0?
+0@
+#190000
+0&
+0I
+#195000
+1&
+1I
+#200000
+0&
+0I
+#205000
+1&
+1I
+#210000
+0&
+0I
+#215000
+1&
+1I
+#220000
+0&
+0I
+#225000
+1&
+1I
+#230000
+0&
+0I
+#235000
+b10 )
+1(
+1&
+1L
+1K
+1I
+b1 n
+#240000
+0&
+0I
+#245000
+0(
+1&
+0K
+1I
+#250000
+0&
+0I
+#255000
+b1111111110000000 *
+1+
+1&
+0Y
+0X
+1^
+1I
+b1111111110000000 o
+b10 n
+#260000
+0&
+0I
+#265000
+0+
+1&
+0^
+1I
+b1111111110000000 j
+b11 n
+17
+16
+15
+14
+13
+12
+11
+10
+1/
+#270000
+0&
+0I
+#275000
+1&
+1I
+1k
+1l
+b0 n
+1?
+1@
+#280000
+0&
+0I
+#285000
+1&
+1I
+0k
+0l
+0?
+0@
+#290000
+0&
+0I
+#295000
+1&
+1I
+#300000
+0&
+0I
+#305000
+1&
+1I
+#310000
+0&
+0I
+#315000
+1&
+1I
+#320000
+0&
+0I
+#325000
+1&
+1I
+#330000
+0&
+0I
