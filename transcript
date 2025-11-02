@@ -11,3 +11,61 @@
 # Compile of matrix_transform.v failed with 81 errors.
 # Compile of tb_applications.v was successful.
 # 12 compiles, 4 failed with 96 errors.
+# Compile of tb_linear_equation_solver.v was successful.
+# Compile of linear_equation_solver.v was successful.
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v was successful.
+# Compile of graphics_transform.v failed with 1 errors.
+# Compile of tb_graphics_transform.v failed with 7 errors.
+# Compile of neural_layer.v was successful.
+# Compile of image_filter.v failed with 54 errors.
+# Compile of matrix_transform.v failed with 81 errors.
+# Compile of tb_neural_layer.v was successful.
+# Compile of tb_image_filter.v failed with 5 errors.
+# Compile of tb_matrix_transform.v was successful.
+# 14 compiles, 5 failed with 148 errors.
+# Compile of tb_image_filter.v failed with 3 errors.
+# Compile of tb_linear_equation_solver.v was successful.
+# Compile of linear_equation_solver.v was successful.
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v was successful.
+# Compile of graphics_transform.v was successful.
+# Compile of tb_graphics_transform.v was successful.
+# Compile of neural_layer.v was successful.
+# Compile of image_filter.v was successful.
+# Compile of matrix_transform.v was successful.
+# Compile of tb_neural_layer.v was successful.
+# Compile of tb_image_filter.v was successful.
+# Compile of tb_matrix_transform.v was successful.
+# 14 compiles, 0 failed with no errors.
+vsim -gui work.tb_neural_layer
+# vsim -gui work.tb_neural_layer 
+# Start time: 11:08:50 on Nov 02,2025
+# Loading work.tb_neural_layer
+# Loading work.neural_layer
+quit -sim
+# End time: 11:09:27 on Nov 02,2025, Elapsed time: 0:00:37
+# Errors: 0, Warnings: 17
+# Compile of tb_linear_equation_solver.v was successful.
+# Compile of linear_equation_solver.v was successful.
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v was successful.
+# Compile of graphics_transform.v was successful.
+# Compile of tb_graphics_transform.v was successful.
+# Compile of neural_layer.v was successful.
+# Compile of image_filter.v was successful.
+# Compile of matrix_transform.v was successful.
+# Compile of tb_neural_layer.v was successful.
+# Compile of tb_image_filter.v was successful.
+# Compile of tb_matrix_transform.v was successful.
+# Compile of perceptron.v failed with 3 errors.
+# Compile of tb_perceptron.v failed with 4 errors.
+# Compile of fir_filter.v failed with 1 errors.
+# Compile of tb_fir_filter.v failed with 5 errors.
+# 18 compiles, 4 failed with 13 errors.

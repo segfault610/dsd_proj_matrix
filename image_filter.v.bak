@@ -1,1 +1,134 @@
+// ============================================================================
+// IMAGE FILTER MODULE - 3x3 Convolution
+// ============================================================================
+
+module image_filter #(
+    parameter M = 3,
+    parameter N = 3,
+    parameter P = 1,
+    parameter DATA_WIDTH = 8
+)(
+    input wire clk,
+    input wire rst_n,
+    input wire start,
+    
+    input wire signed [DATA_WIDTH-1:0] kernel_in,
+    input wire [$clog2(M*N)-1:0] kernel_addr,
+    input wire kernel_wen,
+    
+    input wire signed [DATA_WIDTH-1:0] pixel_in,
+    input wire pixel_valid,
+    
+    input wire [2*DATA_WIDTH-1:0] matrix_result,
+    input wire matrix_valid,
+    
+    output reg [2*DATA_WIDTH-1:0] filter_out,
+    output reg filter_valid,
+    output reg filter_done
+);
+
+    reg signed [DATA_WIDTH-1:0] kernel_mem [0:M*N-1];
+    
+    reg signed [DATA_WIDTH-1:0] line0 [0:2];
+    reg signed [DATA_WIDTH-1:0] line1 [0:2];
+    reg signed [DATA_WIDTH-1:0] line2 [0:2];
+    
+    localparam [2:0] IDLE          = 3'd0;
+    localparam [2:0] FILL_BUFFERS  = 3'd1;
+    localparam [2:0] CONVOLVE      = 3'd2;
+    localparam [2:0] WAIT_RESULT   = 3'd3;
+    localparam [2:0] OUTPUT        = 3'd4;
+    
+    reg [2:0] state;
+    reg [9:0] pixel_counter;
+    
+    integer i;
+    
+    // ===== KERNEL INITIALIZATION - Sobel X Operator =====
+    initial begin
+        kernel_mem = -8'sd1;  kernel_mem = 8'sd0;  kernel_mem = 8'sd1;
+        kernel_mem = -8'sd2;  kernel_mem = 8'sd0;  kernel_mem = 8'sd2;
+        kernel_mem = -8'sd1;  kernel_mem = 8'sd0;  kernel_mem = 8'sd1;
+    end
+    
+    // ===== KERNEL MEMORY WRITE =====
+    always @(posedge clk) begin
+        if (kernel_wen) begin
+            kernel_mem[kernel_addr] <= kernel_in;
+        end
+    end
+    
+    // ===== FSM =====
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            state <= IDLE;
+            filter_out <= 0;
+            filter_valid <= 0;
+            filter_done <= 0;
+            pixel_counter <= 0;
+            
+            for (i = 0; i < 3; i = i + 1) begin
+                line0[i] <= 0;
+                line1[i] <= 0;
+                line2[i] <= 0;
+            end
+        end
+        else begin
+            filter_valid <= 0;
+            
+            case (state)
+                IDLE: begin
+                    filter_done <= 1'b0;
+                    pixel_counter <= 0;
+                    if (start) begin
+                        state <= FILL_BUFFERS;
+                    end
+                end
+                
+                FILL_BUFFERS: begin
+                    if (pixel_valid) begin
+                        // Shift left
+                        line0 <= line0;
+                        line0 <= line0;
+                        line0 <= pixel_in;
+                        
+                        line1 <= line1;
+                        line1 <= line1;
+                        line1 <= line0;
+                        
+                        line2 <= line2;
+                        line2 <= line2;
+                        line2 <= line1;
+                        
+                        pixel_counter <= pixel_counter + 1;
+                        
+                        if (pixel_counter == 10'd8) begin
+                            state <= CONVOLVE;
+                        end
+                    end
+                end
+                
+                CONVOLVE: begin
+                    state <= WAIT_RESULT;
+                end
+                
+                WAIT_RESULT: begin
+                    if (matrix_valid) begin
+                        filter_out <= matrix_result;
+                        filter_valid <= 1'b1;
+                        state <= OUTPUT;
+                    end
+                end
+                
+                OUTPUT: begin
+                    filter_done <= 1'b1;
+                    state <= IDLE;
+                end
+                
+                default: state <= IDLE;
+            endcase
+        end
+    end
+
+endmodule
 

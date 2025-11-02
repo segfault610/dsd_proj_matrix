@@ -1,1 +1,63 @@
+// ============================================================================
+// NEURAL LAYER MODULE - Single Layer Perceptron with ReLU Activation
+// ============================================================================
+
+module neural_layer #(
+    parameter M = 3,
+    parameter N = 3,
+    parameter P = 3,
+    parameter DATA_WIDTH = 8
+)(
+    input wire clk,
+    input wire rst_n,
+    input wire start,
+    
+    input wire [1:0] activation_type,
+    input wire [2*DATA_WIDTH-1:0] matrix_result,
+    input wire matrix_valid,
+    input wire signed [DATA_WIDTH-1:0] bias_in,
+    input wire bias_wen,
+    input wire [$clog2(M)-1:0] bias_addr,
+    
+    output reg [2*DATA_WIDTH-1:0] app_result,
+    output reg app_valid,
+    output reg app_done
+);
+
+    reg signed [DATA_WIDTH-1:0] bias_mem [0:M-1];
+    
+    localparam [2:0] IDLE           = 3'd0;
+    localparam [2:0] WAIT_MATRIX    = 3'd1;
+    localparam [2:0] ADD_BIAS       = 3'd2;
+    localparam [2:0] APPLY_ACTIVATION = 3'd3;
+    localparam [2:0] OUTPUT_RESULT  = 3'd4;
+    
+    reg [2:0] state;
+    reg [2*DATA_WIDTH-1:0] biased_result;
+    reg [2*DATA_WIDTH-1:0] activated_result;
+    reg [$clog2(M):0] neuron_idx;
+    
+    // ===== BIAS MEMORY WRITE =====
+    always @(posedge clk) begin
+        if (bias_wen) begin
+            bias_mem[bias_addr] <= bias_in;
+        end
+    end
+    
+    // ===== ACTIVATION FUNCTIONS (COMBINATIONAL) =====
+    // ReLU: max(0, x)
+    function [2*DATA_WIDTH-1:0] activate_relu;
+        input [2*DATA_WIDTH-1:0] x;
+        begin
+            if (x[2*DATA_WIDTH-1] == 1'b1)
+                activate_relu = {2*DATA_WIDTH{1'b0}};
+            else
+                activate_relu = x;
+        end
+    endfunction
+    
+    // Linear: return as-is
+    function [2*DATA_WIDTH-1:0] activate_linear;
+        input [2*DATA_WIDTH-1:0] x;
+  
 

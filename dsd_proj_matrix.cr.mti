@@ -5,12 +5,19 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	tb_linear_equation_solver
 
-} {} {}} C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/hill_cipher_crypto.v {1 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/hill_cipher_crypto.v
+} {} {}} C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v {1 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module hill_cipher_crypto
+-- Compiling module tb_simple_generic_matrix_mult
 
 Top level modules:
-	hill_cipher_crypto
+	tb_simple_generic_matrix_mult
+
+} {} {}} C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v {1 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module linear_equation_solver_3x3
+
+Top level modules:
+	linear_equation_solver_3x3
 
 } {} {}} C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/simple_generic_matrix_mult.v {1 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/simple_generic_matrix_mult.v
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
@@ -19,12 +26,12 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	simple_generic_matrix_mult
 
-} {} {}} C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v {1 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_simple_generic_matrix_mult.v
+} {} {}} C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/hill_cipher_crypto.v {1 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/hill_cipher_crypto.v
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module tb_simple_generic_matrix_mult
+-- Compiling module hill_cipher_crypto
 
 Top level modules:
-	tb_simple_generic_matrix_mult
+	hill_cipher_crypto
 
 } {} {}} C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v {1 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_hill_cipher.v
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
@@ -33,11 +40,116 @@ Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 
 Top level modules:
 	tb_hill_cipher
 
-} {} {}} C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v {1 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/linear_equation_solver.v
+} {} {}} C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/image_filter.v {0 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/image_filter.v
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
--- Compiling module linear_equation_solver_3x3
+-- Compiling module image_filter
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/image_filter.v(122): (vlog-2730) Undefined variable: 'int'.
+** Error: (vlog-13069) C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/image_filter.v(122): near "i": syntax error, unexpected IDENTIFIER.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/image_filter.v(122): (vlog-2730) Undefined variable: 'i'.
+** Error: (vlog-13069) C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/image_filter.v(122): near ")": syntax error, unexpected ')', expecting ';'.
+** Error: (vlog-13069) C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/image_filter.v(128): near "else": syntax error, unexpected else.
+** Error: (vlog-13069) C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/image_filter.v(136): near "<=": syntax error, unexpected <=.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/image_filter.v(136): (vlog-13205) Syntax error found in the scope following 'filter_done'. Is there a missing '::'?
 
-Top level modules:
-	linear_equation_solver_3x3
+} {4.0 11.0} {}} C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v {0 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module matrix_transform
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(56): (vlog-2110) Illegal reference to memory "rotation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(56): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(56): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(57): (vlog-2110) Illegal reference to memory "rotation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(57): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(57): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(58): (vlog-2110) Illegal reference to memory "rotation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(58): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(58): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(59): (vlog-2110) Illegal reference to memory "rotation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(59): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(59): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(60): (vlog-2110) Illegal reference to memory "rotation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(60): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(60): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(61): (vlog-2110) Illegal reference to memory "rotation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(61): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(61): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(62): (vlog-2110) Illegal reference to memory "rotation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(62): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(62): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(63): (vlog-2110) Illegal reference to memory "rotation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(63): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(63): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(64): (vlog-2110) Illegal reference to memory "rotation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(64): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(64): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(70): (vlog-2110) Illegal reference to memory "scale_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(70): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(70): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(71): (vlog-2110) Illegal reference to memory "scale_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(71): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(71): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(72): (vlog-2110) Illegal reference to memory "scale_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(72): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(72): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(73): (vlog-2110) Illegal reference to memory "scale_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(73): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(73): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(74): (vlog-2110) Illegal reference to memory "scale_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(74): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(74): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(75): (vlog-2110) Illegal reference to memory "scale_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(75): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(75): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(76): (vlog-2110) Illegal reference to memory "scale_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(76): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(76): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(77): (vlog-2110) Illegal reference to memory "scale_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(77): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(77): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(78): (vlog-2110) Illegal reference to memory "scale_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(78): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(78): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(84): (vlog-2110) Illegal reference to memory "translation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(84): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(84): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(85): (vlog-2110) Illegal reference to memory "translation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(85): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(85): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(86): (vlog-2110) Illegal reference to memory "translation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(86): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(86): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(87): (vlog-2110) Illegal reference to memory "translation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(87): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(87): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(88): (vlog-2110) Illegal reference to memory "translation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(88): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(88): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(89): (vlog-2110) Illegal reference to memory "translation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(89): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(89): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(90): (vlog-2110) Illegal reference to memory "translation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(90): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(90): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(91): (vlog-2110) Illegal reference to memory "translation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(91): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(91): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(92): (vlog-2110) Illegal reference to memory "translation_matrix".
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(92): Illegal LHS of assignment.
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/matrix_transform.v(92): (vlog-2997) Cannot assign a packed type 'reg signed[7:0]' to an unpacked type 'reg signed[DATA_WIDTH-1:0] $[0:8]'.
+
+} {4.0 6.0 7.0 9.0 10.0 12.0 13.0 15.0 16.0 18.0 19.0 21.0 22.0 24.0 25.0 27.0 28.0 30.0 31.0 33.0 34.0 36.0 37.0 39.0 40.0 42.0 43.0 45.0 46.0 48.0 49.0 51.0 52.0 54.0 55.0 57.0 58.0 60.0 61.0 63.0 64.0 66.0 67.0 69.0 70.0 72.0 73.0 75.0 76.0 78.0 79.0 81.0 82.0 84.0} {}} C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_graphics_transform.v {0 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_graphics_transform.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module tb_graphics_transform
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_graphics_transform.v(18): (vlog-2730) Undefined variable: 'x_in'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_graphics_transform.v(19): (vlog-2730) Undefined variable: 'y_in'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_graphics_transform.v(20): (vlog-2730) Undefined variable: 'transform_type'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_graphics_transform.v(21): (vlog-2730) Undefined variable: 'param'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_graphics_transform.v(22): (vlog-2730) Undefined variable: 'start'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_graphics_transform.v(23): (vlog-2730) Undefined variable: 'clk'.
+** Error: C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/tb_graphics_transform.v(25): (vlog-2730) Undefined variable: 'done'.
+
+} {4.0 11.0} {}} C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/graphics_transform.v {0 {vlog -work work -stats=none C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/graphics_transform.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module graphics_transform
+** Error (suppressible): C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/graphics_transform.v(41): (vlog-2388) 'transform_matrix' already declared in this scope (graphics_transform) at C:/Users/Jonathan/Desktop/Code/ModelSimProjects/dsd_proj_matrix/graphics_transform.v(35).
 
 } {} {}}

@@ -1,0 +1,134 @@
+`timescale 1ns / 1ps
+
+module tb_image_filter;
+
+    parameter M = 3;
+    parameter N = 3;
+    parameter P = 1;
+    parameter DATA_WIDTH = 8;
+    parameter CLK_PERIOD = 10;
+    
+    reg clk;
+    reg rst_n;
+    reg start;
+    reg signed [DATA_WIDTH-1:0] kernel_in;
+    reg [$clog2(M*N)-1:0] kernel_addr;
+    reg kernel_wen;
+    reg signed [DATA_WIDTH-1:0] pixel_in;
+    reg pixel_valid;
+    reg [2*DATA_WIDTH-1:0] matrix_result;
+    reg matrix_valid;
+    
+    wire [2*DATA_WIDTH-1:0] filter_out;
+    wire filter_valid;
+    wire filter_done;
+    
+    image_filter #(M, N, P, DATA_WIDTH) dut (
+        .clk(clk),
+        .rst_n(rst_n),
+        .start(start),
+        .kernel_in(kernel_in),
+        .kernel_addr(kernel_addr),
+        .kernel_wen(kernel_wen),
+        .pixel_in(pixel_in),
+        .pixel_valid(pixel_valid),
+        .matrix_result(matrix_result),
+        .matrix_valid(matrix_valid),
+        .filter_out(filter_out),
+        .filter_valid(filter_valid),
+        .filter_done(filter_done)
+    );
+    
+    // Clock generation
+    initial begin
+        clk = 0;
+        forever #(CLK_PERIOD/2) clk = ~clk;
+    end
+    
+    // Test stimuli
+    initial begin
+        $dumpfile("tb_image_filter.vcd");
+        $dumpvars(0, tb_image_filter);
+        
+        // **FIX 1: Declare loop variables as 'integer' here**
+        integer i;
+        integer p;
+        
+        rst_n = 0;
+        start = 0;
+        kernel_wen = 0;
+        pixel_valid = 0;
+        matrix_valid = 0;
+        pixel_in = 0;
+        
+        #(CLK_PERIOD * 2);
+        rst_n = 1;
+        #CLK_PERIOD;
+        
+        // =====================================================================
+        // TEST 1: Load Custom Kernel
+        // =====================================================================
+        $display("\n========== TEST 1: Load Custom Kernel ==========");
+        
+        // Load identity-like kernel
+        // **FIX 2: Use the declared 'i' variable**
+        for (i = 0; i < 9; i = i + 1) begin
+            if (i == 4) begin
+                kernel_in = 8'sd1;  // Center element
+            end else begin
+                kernel_in = 8'sd0;
+            end
+            kernel_addr = i;
+            kernel_wen = 1;
+            #CLK_PERIOD;
+        end
+        kernel_wen = 0;
+        $display("? Kernel loaded");
+        
+        #(CLK_PERIOD * 2);
+        
+        // =====================================================================
+        // TEST 2: Feed Pixel Stream
+        // =====================================================================
+        $display("\n========== TEST 2: Feed Pixel Stream ==========");
+        
+        start = 1;
+        #CLK_PERIOD;
+        start = 0;
+        
+        // Feed 9 pixels (3x3)
+        // **FIX 3: Use the declared 'p' variable**
+        for (p = 0; p < 9; p = p + 1) begin
+            // **FIX 4: Removed unsigned cast for cleaner assignment**
+            // to 'signed reg'
+            pixel_in = p + 1; 
+            pixel_valid = 1;
+            #CLK_PERIOD;
+        end
+        pixel_valid = 0;
+        
+        #(CLK_PERIOD * 3);
+        
+        // =====================================================================
+        // TEST 3: Convolution Result
+        // =====================================================================
+        $display("\n========== TEST 3: Convolution Result ==========");
+        
+        matrix_result = 16'h0009;  // Sum of pixels 1-9
+        matrix_valid = 1;
+        #CLK_PERIOD;
+        matrix_valid = 0;
+        
+        wait(filter_done);
+        #CLK_PERIOD;
+        
+        $display("? Filter output: %0d", filter_out);
+        $display("? Filter valid: %b", filter_valid);
+        
+        #(CLK_PERIOD * 5);
+        
+        $display("\n========== ALL TESTS COMPLETED ==========\n");
+        $finish;
+    end
+
+endmodule

@@ -1,0 +1,28 @@
+// Testbench: Low-pass filter test
+module fir_filter_tb;
+    
+    // Test with known signals
+    // 1. Impulse response (delta function) ? should output coefficients
+    // 2. Step function ? cumulative sum of coefficients
+    // 3. Sinusoid at cutoff frequency ? observe attenuation
+    
+    initial begin
+        $display("FIR Filter Tests");
+        
+        // Impulse response test
+        sample_in = 16'h7FFF;  // Maximum amplitude
+        sample_valid = 1;
+        @(posedge clk);
+        
+        sample_in = 16'h0000;  // Zero afterwards
+        repeat(TAPS) begin
+            @(posedge clk);
+            if (output_valid)
+                $display("Impulse Response[%d] = %h", count, filtered_out);
+        end
+        
+        // Should match filter coefficients
+    end
+
+endmodule
+

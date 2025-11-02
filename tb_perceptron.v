@@ -1,0 +1,27 @@
+// Testbench: Simple AND gate classifier
+module tb_perceptron;
+    
+    // Train a perceptron to learn AND function
+    // Inputs: [x1, x2, bias=1, unused]
+    // Weights: Pre-trained for AND gate
+    
+    initial begin
+        $display("Perceptron AND Gate Test");
+        
+        // Test 1: Input [0, 0] ? Expected Output: 0 (class 0)
+        input_vec = 8'd0;
+        input_vec = 8'd0;
+        input_vec = 8'd1;  // bias
+        input_vec = 8'd0;
+        start = 1;
+        @(posedge clk); start = 0;
+        wait(done);
+        $display("AND(0,0) = %d", (output_vec > output_vec) ? 0 : 1);
+        
+        // Test 2: Input [0, 1] ? Expected: 0
+        // Test 3: Input [1, 0] ? Expected: 0
+        // Test 4: Input [1, 1] ? Expected: 1
+    end
+
+endmodule
+
