@@ -69,3 +69,22 @@ quit -sim
 # Compile of fir_filter.v failed with 1 errors.
 # Compile of tb_fir_filter.v failed with 5 errors.
 # 18 compiles, 4 failed with 13 errors.
+# Compile of tb_linear_equation_solver.v was successful.
+# Compile of linear_equation_solver.v was successful.
+# Compile of hill_cipher_crypto.v was successful.
+# Compile of tb_hill_cipher.v was successful.
+# Compile of simple_generic_matrix_mult.v was successful.
+# Compile of tb_simple_generic_matrix_mult.v was successful.
+# Compile of graphics_transform.v was successful.
+# Compile of tb_graphics_transform.v was successful.
+# Compile of neural_layer.v was successful.
+# Compile of image_filter.v was successful.
+# Compile of matrix_transform.v was successful.
+# Compile of tb_neural_layer.v was successful.
+# Compile of tb_image_filter.v was successful.
+# Compile of tb_matrix_transform.v was successful.
+# Compile of perceptron.v failed with 3 errors.
+# Compile of tb_perceptron.v failed with 4 errors.
+# Compile of fir_filter.v failed with 1 errors.
+# Compile of tb_fir_filter.v failed with 5 errors.
+# 18 compiles, 4 failed with 13 errors.
