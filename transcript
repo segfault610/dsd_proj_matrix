@@ -4,4 +4,10 @@
 # Compile of tb_hill_cipher.v was successful.
 # Compile of simple_generic_matrix_mult.v was successful.
 # Compile of tb_simple_generic_matrix_mult.v was successful.
-# 6 compiles, 0 failed with no errors.
+# Compile of graphics_transform.v failed with 1 errors.
+# Compile of tb_graphics_transform.v failed with 7 errors.
+# Compile of neural_layer.v was successful.
+# Compile of image_filter.v failed with 7 errors.
+# Compile of matrix_transform.v failed with 81 errors.
+# Compile of tb_applications.v was successful.
+# 12 compiles, 4 failed with 96 errors.
